@@ -10,7 +10,8 @@ client.on('ready', () => {
 client.on('message', (message) => {
 	if (message.content == '$help') {
 		let m =
-			'fsb-ticker. Developed by BuffMan \n\n Example commands: \n `$avgo`\n `$aapl w`\n `$tsla d rsi macd`\n\n';
+			'fsb-ticker. Developed by BuffMan \n\n Example commands: \n `$avgo`\n `$aapl w`\n `$tsla d rsi macd`\n\n' +
+			'Visit https://github.com/reaganmcf/discord-stock-bot for more info and any feature requests :)';
 		message.channel.send(m);
 	} else if (message.content.startsWith('$/')) {
 		console.log('FUTURES');
@@ -24,7 +25,7 @@ client.on('message', (message) => {
 		console.log(options);
 		console.log('timePeriod = ' + timePeriod);
 		console.log('looking for ticker: ' + ticker);
-		message.channel.send("My Bot's message", {
+		message.channel.send('', {
 			files: [
 				'https://elite.finviz.com/fut_chart.ashx?t=' +
 					ticker +
@@ -49,7 +50,7 @@ client.on('message', (message) => {
 		//valid options = ta, time period, type
 
 		console.log('looking for ticker: ' + ticker);
-		message.channel.send("My Bot's message", {
+		message.channel.send('', {
 			files: [
 				'https://elite.finviz.com/chart.ashx?t=' +
 					ticker +

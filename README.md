@@ -1,6 +1,13 @@
 # Discord Stock Bot
 I made this for a private stock trading discord group I run. This was initially just thrown together and I have plenty of enhancements and features planned.
 
+## Setup
+
+1. Clone the repository to whichever hosting service you prefer
+2. Rename `example-config.js` to `config.js`, and replace the fields with your information
+3. Run `npm install`
+3. Run `node index.js`
+
 ## Help
 
 ### Indicators
