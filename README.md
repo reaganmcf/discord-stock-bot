@@ -1,6 +1,8 @@
 # Discord Stock Bot
 I made this for a private stock trading discord group I run. This was initially just thrown together and I have plenty of enhancements and features planned.
 
+This uses a [Finviz Elite Subscription](https://finviz.com) to grab the charts, so you will have to pay for that subscription yourself.
+
 **If you have any features you would like implemented, please submit a new issue with the _Feature Request_ label and I will respond :\)**
 
 ## Example Chart
