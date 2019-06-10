@@ -17,11 +17,11 @@ I made this for a private stock trading discord group I run. This was initially 
 ## Help
 
 ### Example Commands
-`$avgo` - Show 5 min AVGO chart
-`$aapl w`- Show weekly AAPL chart
-`$tsla rsi macd` Show RSI and MACD indicators on TSLA daily chart
-`$spy line` Show 5 min SPY line chart
-`$/es` Show 5 min S&P 500 Furtures chart
+- `$avgo` -> Show 5 min AVGO chart
+- `$aapl w`-> Show weekly AAPL chart
+- `$tsla rsi macd` -> Show RSI and MACD indicators on TSLA daily chart
+- `$spy line` -> Show 5 min SPY line chart
+- `$/es` -> Show 5 min S&P 500 Furtures chart
 
 ### Chart Types
 - `line` -> Shows line chart rather than candles
