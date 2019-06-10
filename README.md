@@ -3,6 +3,10 @@ I made this for a private stock trading discord group I run. This was initially 
 
 **If you have any features you would like implemented, please submit a new issue with the _Feature Request_ label and I will respond :\)**
 
+## Example Chart
+![](https://cdn.discordapp.com/attachments/563555590086066188/587663025054547971/chart.ashxttmotyctast_csch_200psma_50sma_200sma_20rsi_b_14macd_b_12_26_9pdslrev1560172643487.png)
+
+
 ## Setup
 
 1. Clone the repository to whichever hosting service you prefer
