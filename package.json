@@ -1,0 +1,11 @@
+{
+  "name": "fsb-ticker",
+  "version": "1.0.0",
+  "description": "stock bot for fsb trading server",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "reagan mcfarland",
+  "license": "ISC"
+}
