@@ -96,8 +96,17 @@ This uses a [Finviz Elite Subscription](https://finviz.com) to grab the charts, 
         - `d` -> Daily
         - `w` -> Weekly 
 
-## Help
-
+## Forex
+- Currently supports [10 Currency Pairs](https://elite.finviz.com/forex_charts.ashx)
+- Example:
+`$usd/jpy w`
+![Weekly USD/JPY Chart](https://cdn.discordapp.com/attachments/563558685608116254/589574723760029707/fx_image.ashxusdjpy_w1_l.png)
+- Available Parameters
+    - Time Intervals
+        - `5` -> 5 minute (Default)
+        - `h` -> Hourly
+        - `d` -> Daily
+        - `m` -> Monthly
 
 
 ## Setup
