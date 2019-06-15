@@ -1,7 +1,5 @@
 const Discord = require('discord.js');
-
 const config = require('./config');
-
 const client = new Discord.Client();
 client.on('ready', () => {
 	console.log('I am ready!');
@@ -11,8 +9,47 @@ client.on('message', (message) => {
 	if (message.content == '$help') {
 		let m =
 			'fsb-ticker. Developed by BuffMan \n\n Example commands: \n `$avgo`\n `$aapl w`\n `$tsla d rsi macd`\n\n' +
-			'Visit https://github.com/reaganmcf/discord-stock-bot for more info and any feature requests :)';
+			'Visit https://github.com/reaganmcf/discord-stock-bot/tree/master for more info and any feature requests :)';
 		message.channel.send(m);
+	} else if (message.content.startsWith('$.')) {
+		console.log('CRYPTO');
+		let ticker = message.content.split(' ')[0].substring(2);
+		let rawOptions = message.content.split(ticker)[1].substring(1).split(' ');
+		let options = [];
+		for (var i = 0; i < rawOptions.length; i++) options.push(rawOptions[i]);
+		let timePeriod = extractFromOptions('time_period_forex', options);
+		console.log('https://elite.finviz.com/fx_image.ashx?' + ticker + 'usd_' + timePeriod + '_l.png');
+		if (checkTicker(ticker, 'crypto')) {
+			message.channel.send('', {
+				files: [ 'https://elite.finviz.com/fx_image.ashx?' + ticker + 'usd_' + timePeriod + '_l.png' ]
+			});
+		}
+	} else if (message.content.includes('/') && message.content.indexOf('/') != 1) {
+		console.log('FOREX');
+		let ticker = message.content.split(' ')[0].substring(1);
+		let rawOptions = message.content.split(ticker)[1].substring(1).split(' ');
+		let options = [];
+		for (var i = 0; i < rawOptions.length; i++) options.push(rawOptions[i]);
+		let timePeriod = extractFromOptions('time_period_forex', options);
+		if (checkTicker(ticker, 'forex')) {
+			message.channel.send('', {
+				files: [
+					'https://elite.finviz.com/fx_image.ashx?' + ticker.split('/').join('') + '_' + timePeriod + '_l.png'
+				]
+			});
+		}
+	} else if (message.content.includes('sectors')) {
+		console.log('SECTORS');
+		let rawOptions = message.content.split(' ');
+		let rawTimePeriod = 'day';
+		if (rawOptions.length > 1) {
+			rawTimePeriod = rawOptions[1];
+		}
+		let formattedTimePeriod = extractFromOptions('time_period_sector', rawTimePeriod);
+
+		message.channel.send('', {
+			files: [ 'https://elite.finviz.com/grp_image.ashx?bar_sector_' + formattedTimePeriod + '.png' ]
+		});
 	} else if (message.content.startsWith('$/')) {
 		console.log('FUTURES');
 		let ticker = message.content.split(' ')[0].substring(1);
@@ -22,50 +59,63 @@ client.on('message', (message) => {
 		for (var i = 0; i < rawOptions.length; i++) options.push(rawOptions[i]);
 		//get time period
 		let timePeriod = extractFromOptions('time_period_futures', options);
-		console.log(options);
-		console.log('timePeriod = ' + timePeriod);
-		console.log('looking for ticker: ' + ticker);
-		message.channel.send('', {
-			files: [
-				'https://elite.finviz.com/fut_chart.ashx?t=' +
-					ticker +
-					'&p=' +
-					timePeriod +
-					'&rev=' +
-					config.FINVIZ_REV_KEY +
-					'.png'
-			]
-		});
+		if (checkTicker(ticker)) {
+			message.channel.send('', {
+				files: [
+					'https://elite.finviz.com/fut_chart.ashx?t=' +
+						ticker +
+						'&p=' +
+						timePeriod +
+						'&rev=' +
+						config.FINVIZ_REV_KEY +
+						'.png'
+				]
+			});
+		}
 	} else if (message.content.startsWith('$')) {
 		let ticker = message.content.split(' ')[0].substring(1);
 		let rawOptions = message.content.split(ticker)[1].split(' ');
 		let options = [];
 		for (var i = 1; i < rawOptions.length; i++) options.push(rawOptions[i]);
-		//get time period
 		let timePeriod = extractFromOptions('time_period', options);
 		let chartType = extractFromOptions('chart_type', options);
 		let additionalIndicators = extractFromOptions('indicators', options);
 		if (additionalIndicators.length != 0) timePeriod = 'd';
-		console.log(options);
-		//valid options = ta, time period, type
-
-		console.log('looking for ticker: ' + ticker);
-		message.channel.send('', {
-			files: [
-				'https://elite.finviz.com/chart.ashx?t=' +
-					ticker +
-					'&ty=' +
-					chartType +
-					(timePeriod == 'd' ? '&ta=st_c,sch_200p,sma_50,sma_200,sma_20' + additionalIndicators : '') +
-					'&p=' +
-					timePeriod +
-					'&s=l&rev=' +
-					config.FINVIZ_REV_KEY +
-					'.png'
-			]
-		});
+		console.log(rawOptions);
+		if (checkTicker(ticker)) {
+			message.channel.send('', {
+				files: [
+					'https://elite.finviz.com/chart.ashx?t=' +
+						ticker +
+						'&ty=' +
+						chartType +
+						(timePeriod == 'd' ? '&ta=st_c,sch_200p,sma_50,sma_200,sma_20' + additionalIndicators : '') +
+						'&p=' +
+						timePeriod +
+						'&s=l&rev=' +
+						config.FINVIZ_REV_KEY +
+						'.png'
+				]
+			});
+		}
 	}
 });
+
+function checkTicker(ticker, type_check = null) {
+	if (type_check != null) {
+		if (type_check == 'forex') {
+			return /^(eur\/usd|gbp\/usd|usd\/jpy|usd\/cad|usd\/chf|aud\/usd|nzd\/usd|eur\/gbp|gbp\/jpy)/g.test(ticker);
+		} else if (type_check == 'crypto') {
+			return /^(btc|ltc|eth|xrp|bch)/g.test(ticker);
+		}
+	}
+	return !/.*\d+.*/g.test(ticker);
+}
+
+const urlExists = (url) =>
+	new Promise((resolve, reject) =>
+		request.head(url).on('response', (res) => resolve(res.statusCode.toString()[0] === '2'))
+	);
 
 function extractFromOptions(key, options) {
 	if (key == 'indicators') {
@@ -74,7 +124,7 @@ function extractFromOptions(key, options) {
 			let item = options[i];
 			switch (item) {
 				case 'rsi':
-					tempIndicator = ',' + 'rsi_b_14';
+					tempIndicator += ',' + 'rsi_b_14';
 					break;
 				case 'macd':
 					tempIndicator += ',' + 'macd_b_12_26_9';
@@ -179,6 +229,49 @@ function extractFromOptions(key, options) {
 					tempTimePeriod = 'm1';
 					break;
 			}
+		}
+		return tempTimePeriod;
+	} else if (key == 'time_period_forex') {
+		var tempTimePeriod = 'm5';
+		for (let i = 0; i < options.length; i++) {
+			let item = options[i];
+			switch (item) {
+				case 'h':
+					tempTimePeriod = 'h1';
+					break;
+				case 'd':
+					tempTimePeriod = 'd1';
+					break;
+				case 'w':
+					tempTimePeriod = 'w1';
+					break;
+				case 'm':
+					tempTimePeriod = 'mo';
+					break;
+			}
+		}
+		return tempTimePeriod;
+	} else if (key == 'time_period_sector') {
+		tempTimePeriod = 't';
+		switch (options) {
+			case 'w':
+				tempTimePeriod = 'w';
+				break;
+			case 'm':
+				tempTimePeriod = 'm';
+				break;
+			case 'q':
+				tempTimePeriod = 'q';
+				break;
+			case 'h':
+				tempTimePeriod = 'h';
+				break;
+			case 'y':
+				tempTimePeriod = 'y';
+				break;
+			case 'ytd':
+				tempTimePeriod = 'ytd';
+				break;
 		}
 		return tempTimePeriod;
 	}
