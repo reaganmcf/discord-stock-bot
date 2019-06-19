@@ -61,15 +61,7 @@ client.on('message', (message) => {
 		let timePeriod = extractFromOptions('time_period_futures', options);
 		if (checkTicker(ticker)) {
 			message.channel.send('', {
-				files: [
-					'https://elite.finviz.com/fut_chart.ashx?t=' +
-						ticker +
-						'&p=' +
-						timePeriod +
-						'&rev=' +
-						config.FINVIZ_REV_KEY +
-						'.png'
-				]
+				files: [ 'https://elite.finviz.com/fut_chart.ashx?t=' + ticker + '&p=' + timePeriod + '.png' ]
 			});
 		}
 	} else if (message.content.startsWith('$')) {
@@ -92,8 +84,7 @@ client.on('message', (message) => {
 						(timePeriod == 'd' ? '&ta=st_c,sch_200p,sma_50,sma_200,sma_20' + additionalIndicators : '') +
 						'&p=' +
 						timePeriod +
-						'&s=l&rev=' +
-						config.FINVIZ_REV_KEY +
+						'&s=l' +
 						'.png'
 				]
 			});
