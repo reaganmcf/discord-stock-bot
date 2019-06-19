@@ -18,8 +18,8 @@ I made this for a private stock trading discord group I run. This was initially 
 
 ## Stocks, Indices, and Equities
 - Example:
-`$tsla rsi macd`
-![TSLA Daily with RSI and MACD](https://cdn.discordapp.com/attachments/563558685608116254/589570549412397083/chart.ashxttslatyctast_csch_200psma_50sma_200sma_20mfi_b_14rsi_b_14pdslrev1560172643487.png)
+`$tsla rsi mfi`
+![TSLA Daily with RSI and MFI](https://cdn.discordapp.com/attachments/563558685608116254/589570549412397083/chart.ashxttslatyctast_csch_200psma_50sma_200sma_20mfi_b_14rsi_b_14pdslrev1560172643487.png)
 - Available Parameters
     - Indicators
         - `rsi` -> Relative Strength Index. Default settings are `14`
