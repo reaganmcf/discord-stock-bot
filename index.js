@@ -38,7 +38,7 @@ client.on('message', (message) => {
 				]
 			});
 		}
-	} else if (message.content.includes('sectors')) {
+	} else if (message.content.startsWith('$sectors ')) {
 		console.log('SECTORS');
 		let rawOptions = message.content.split(' ');
 		let rawTimePeriod = 'day';
