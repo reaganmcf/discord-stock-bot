@@ -59,9 +59,10 @@ client.on('message', (message) => {
 		for (var i = 0; i < rawOptions.length; i++) options.push(rawOptions[i]);
 		//get time period
 		let timePeriod = extractFromOptions('time_period_futures', options);
+		console.log(`timePeriod: ${timePeriod}`);
 		if (checkTicker(ticker)) {
 			message.channel.send('', {
-				files: [ 'https://elite.finviz.com/fut_chart.ashx?t=' + ticker + '&p=' + timePeriod + '.png' ]
+				files: [ 'https://elite.finviz.com/fut_chart.ashx?t=' + ticker + '&p=' + timePeriod + '&f=1.png' ]
 			});
 		}
 	} else if (message.content.startsWith('$')) {
