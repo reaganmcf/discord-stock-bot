@@ -22,7 +22,7 @@ client.on('message', (message) => {
 			'fsb-ticker. Developed by BuffMan \n\n Example commands: \n `$avgo`\n `$aapl w`\n `$tsla d rsi macd`\n `$spy line`\n `$/es`\n `$.btc`\n `$usd/jpy w`\n `$sectors ytd`\n\n' +
 			'**Currently Scheduled Features**\n' +
 			'- Add support for BollingerBands and other Overlays\n\n' +
-			'_Contact Buffman for more info and any feature requests_\n';
+			'_Contact BuffMan for more info and any feature requests_\n';
 		message.channel.send(m);
 	} else if (message.content.startsWith('$.')) {
 		console.log('CRYPTO');
