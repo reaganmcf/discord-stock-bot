@@ -1,15 +1,26 @@
 const Discord = require('discord.js');
+const moment = require('moment');
 const config = require('./config');
 const client = new Discord.Client();
 client.on('ready', () => {
-	console.log('I am ready!');
+	console.log('I am ready! Current time is ' + moment().format('LT'));
+	let sentMessage = false;
+	setInterval(() => {
+		if (moment().format('LT') == '1:30 AM' && !sentMessage) {
+			console.log('MARKET HAS OPENED');
+			sentMessage = true;
+			client.channels.get(config.MORNING_BELL_CHANNEL_ID).send('**MARKET IS OPEN**\n\t:bell::bell::bell:\t');
+		} else if (moment().format('LT') == '1:31 AM') {
+			sentMessage = false;
+		}
+	}, 1000);
 });
 
 client.on('message', (message) => {
 	if (message.content == '$help') {
 		let m =
 			'fsb-ticker. Developed by BuffMan \n\n Example commands: \n `$avgo`\n `$aapl w`\n `$tsla d rsi macd`\n\n' +
-			'Visit https://github.com/reaganmcf/discord-stock-bot/tree/master for more info and any feature requests :)';
+			'Contact Buffman for more info and any feature requests :)';
 		message.channel.send(m);
 	} else if (message.content.startsWith('$.')) {
 		console.log('CRYPTO');
