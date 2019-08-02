@@ -39,6 +39,10 @@ I made this for a private stock trading discord group I run. This was initially 
         - `trix` -> Triple Exponential Moving Average. Default settings are `9`
         - `ult` -> Ultimate Oscillator. Default settings are `7, 14, 28`
         - `wr` -> Williams %R. Default settings are `14`
+        - `ema` -> Exponential Moving Average. Default settings are `9, 21`
+        - `bb_20` -> 20 Period Bollinger Bands. Default settings are `2`
+        - `bb_50` -> 50 Period Bollinger Bands. Default settings are `2`
+        - `hilo` -> High / Low Channel. Default settings are `20`
     - Chart Types
         - `candle` -> default
         - `line` -> Shows line chart rather than candles
