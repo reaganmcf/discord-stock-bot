@@ -84,21 +84,22 @@ client.on('message', (message) => {
 		let rawOptions = message.content.toLowerCase().split(ticker)[1].split(' ');
 		let options = [];
 		for (var i = 1; i < rawOptions.length; i++) options.push(rawOptions[i]);
+		console.log(options);
 		let timePeriod = extractFromOptions('time_period', options);
 		let chartType = extractFromOptions('chart_type', options);
 		let additionalIndicators = extractFromOptions('indicators', options);
 		if (additionalIndicators.length != 0) timePeriod = 'd';
-		// console.log(
-		// 	'https://elite.finviz.com/chart.ashx?t=' +
-		// 		ticker +
-		// 		'&ty=' +
-		// 		chartType +
-		// 		(timePeriod == 'd' ? '&ta=st_c,sch_200p' + additionalIndicators : '') +
-		// 		'&p=' +
-		// 		timePeriod +
-		// 		'&s=l' +
-		// 		'.png'
-		// );
+		console.log(
+			'https://elite.finviz.com/chart.ashx?t=' +
+				ticker +
+				'&ty=' +
+				chartType +
+				(timePeriod == 'd' ? '&ta=st_c,sch_200p' + additionalIndicators : '') +
+				'&p=' +
+				timePeriod +
+				'&s=l' +
+				'.png'
+		);
 		if (checkTicker(ticker)) {
 			message.channel.send('', {
 				files: [
@@ -136,14 +137,7 @@ const urlExists = (url) =>
 function extractFromOptions(key, options) {
 	if (key == 'indicators') {
 		var tempIndicator = '';
-		if (
-			!options.includes('bb20') &&
-			!options.includes('bb50') &&
-			!options.includes('borc') &&
-			!options.includes('ema')
-		) {
-			tempIndicator += ',sma_50,sma_200,sma_20';
-		}
+
 		for (let i = 0; i < options.length; i++) {
 			let item = options[i];
 			switch (item) {
@@ -213,6 +207,16 @@ function extractFromOptions(key, options) {
 				case 'ema':
 					tempIndicator += ',' + 'ema_9,ema_21';
 					break;
+			}
+		}
+		if (tempIndicator != '') {
+			if (
+				!options.includes('bb20') &&
+				!options.includes('bb50') &&
+				!options.includes('borc') &&
+				!options.includes('ema')
+			) {
+				tempIndicator += ',sma_50,sma_200,sma_20';
 			}
 		}
 		return tempIndicator;
