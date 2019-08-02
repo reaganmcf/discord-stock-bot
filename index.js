@@ -4,9 +4,10 @@ const config = require('./config');
 const client = new Discord.Client();
 client.on('ready', () => {
 	console.log('I am ready! Current time is ' + moment().format('LT'));
+	let weekday = moment().isoWeekday();
 	let sentMessage = false;
 	setInterval(() => {
-		if (moment().format('LT') == '1:30 AM' && !sentMessage) {
+		if (moment().format('LT') == '1:30 AM' && !sentMessage && weekday < 6) {
 			console.log('MARKET HAS OPENED');
 			sentMessage = true;
 			client.channels.get(config.MORNING_BELL_CHANNEL_ID).send('**MARKET IS OPEN**\n\t:bell::bell::bell:\t');
@@ -87,7 +88,17 @@ client.on('message', (message) => {
 		let chartType = extractFromOptions('chart_type', options);
 		let additionalIndicators = extractFromOptions('indicators', options);
 		if (additionalIndicators.length != 0) timePeriod = 'd';
-		console.log(rawOptions);
+		// console.log(
+		// 	'https://elite.finviz.com/chart.ashx?t=' +
+		// 		ticker +
+		// 		'&ty=' +
+		// 		chartType +
+		// 		(timePeriod == 'd' ? '&ta=st_c,sch_200p' + additionalIndicators : '') +
+		// 		'&p=' +
+		// 		timePeriod +
+		// 		'&s=l' +
+		// 		'.png'
+		// );
 		if (checkTicker(ticker)) {
 			message.channel.send('', {
 				files: [
@@ -95,7 +106,7 @@ client.on('message', (message) => {
 						ticker +
 						'&ty=' +
 						chartType +
-						(timePeriod == 'd' ? '&ta=st_c,sch_200p,sma_50,sma_200,sma_20' + additionalIndicators : '') +
+						(timePeriod == 'd' ? '&ta=st_c,sch_200p' + additionalIndicators : '') +
 						'&p=' +
 						timePeriod +
 						'&s=l' +
@@ -125,6 +136,14 @@ const urlExists = (url) =>
 function extractFromOptions(key, options) {
 	if (key == 'indicators') {
 		var tempIndicator = '';
+		if (
+			!options.includes('bb20') &&
+			!options.includes('bb50') &&
+			!options.includes('borc') &&
+			!options.includes('ema')
+		) {
+			tempIndicator += ',sma_50,sma_200,sma_20';
+		}
 		for (let i = 0; i < options.length; i++) {
 			let item = options[i];
 			switch (item) {
@@ -178,6 +197,21 @@ function extractFromOptions(key, options) {
 					break;
 				case 'wr':
 					tempIndicator += ',' + 'wr_b_14';
+					break;
+				case 'bb20':
+					tempIndicator += ',' + 'bb_20_2';
+					break;
+				case 'bb50':
+					tempIndicator += ',' + 'bb_50_2';
+					break;
+				case 'borc':
+					tempIndicator += ',' + 'bb_20_2,bb_50_2';
+					break;
+				case 'hilo':
+					tempIndicator += ',' + 'hilo_20';
+					break;
+				case 'ema':
+					tempIndicator += ',' + 'ema_9,ema_21';
 					break;
 			}
 		}
