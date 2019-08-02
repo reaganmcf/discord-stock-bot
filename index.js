@@ -27,8 +27,8 @@ client.on('message', (message) => {
 		message.channel.send(m);
 	} else if (message.content.startsWith('$.')) {
 		console.log('CRYPTO');
-		let ticker = message.content.split(' ')[0].substring(2);
-		let rawOptions = message.content.split(ticker)[1].substring(1).split(' ');
+		let ticker = message.content.toLowerCase().split(' ')[0].substring(2);
+		let rawOptions = message.content.toLowerCase().split(ticker)[1].substring(1).split(' ');
 		let options = [];
 		for (var i = 0; i < rawOptions.length; i++) options.push(rawOptions[i]);
 		let timePeriod = extractFromOptions('time_period_forex', options);
@@ -40,8 +40,8 @@ client.on('message', (message) => {
 		}
 	} else if (message.content.includes('/') && message.content.indexOf('/') != 1) {
 		console.log('FOREX');
-		let ticker = message.content.split(' ')[0].substring(1);
-		let rawOptions = message.content.split(ticker)[1].substring(1).split(' ');
+		let ticker = message.content.toLowerCase().split(' ')[0].substring(1);
+		let rawOptions = message.content.toLowerCase().split(ticker)[1].substring(1).split(' ');
 		let options = [];
 		for (var i = 0; i < rawOptions.length; i++) options.push(rawOptions[i]);
 		let timePeriod = extractFromOptions('time_period_forex', options);
@@ -54,7 +54,7 @@ client.on('message', (message) => {
 		}
 	} else if (message.content.startsWith('$sectors')) {
 		console.log('SECTORS');
-		let rawOptions = message.content.split(' ');
+		let rawOptions = message.content.toLowerCase().split(' ');
 		let rawTimePeriod = 'day';
 		if (rawOptions.length > 1) {
 			rawTimePeriod = rawOptions[1];
@@ -66,8 +66,8 @@ client.on('message', (message) => {
 		});
 	} else if (message.content.startsWith('$/')) {
 		console.log('FUTURES');
-		let ticker = message.content.split(' ')[0].substring(1);
-		let rawOptions = message.content.split(ticker)[1].substring(1).split(' ');
+		let ticker = message.content.toLowerCase().split(' ')[0].substring(1);
+		let rawOptions = message.content.toLowerCase().split(ticker)[1].substring(1).split(' ');
 		console.log(rawOptions);
 		let options = [];
 		for (var i = 0; i < rawOptions.length; i++) options.push(rawOptions[i]);
@@ -80,8 +80,8 @@ client.on('message', (message) => {
 			});
 		}
 	} else if (message.content.startsWith('$')) {
-		let ticker = message.content.split(' ')[0].substring(1);
-		let rawOptions = message.content.split(ticker)[1].split(' ');
+		let ticker = message.content.toLowerCase().split(' ')[0].substring(1);
+		let rawOptions = message.content.toLowerCase().split(ticker)[1].split(' ');
 		let options = [];
 		for (var i = 1; i < rawOptions.length; i++) options.push(rawOptions[i]);
 		let timePeriod = extractFromOptions('time_period', options);
