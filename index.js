@@ -18,7 +18,14 @@ client.on('ready', () => {
 });
 
 client.on('message', (message) => {
-	if (message.content == '$help') {
+	let catcher = isStockChartsInterceptor(message.content);
+	if (catcher) {
+		console.log('caught intercept');
+		console.log(catcher);
+		message.channel.send('', {
+			files: [ catcher.ticker.url ]
+		});
+	} else if (message.content == '$help') {
 		let m =
 			'fsb-ticker. Developed by BuffMan \n\n Example commands: \n `$avgo`\n `$aapl w`\n `$tsla d rsi macd`\n `$spy line`\n `$/es`\n `$.btc`\n `$usd/jpy w`\n `$sectors ytd`\n\n' +
 			'**Currently Scheduled Features**\n' +
@@ -127,6 +134,47 @@ function checkTicker(ticker, type_check = null) {
 		}
 	}
 	return !/.*\d+.*/g.test(ticker);
+}
+
+function isStockChartsInterceptor(content) {
+	//$SSEC, $HSCEI, $NIKK, $DAX, $USB_T
+	let VALID_INTERCEPTORS = [
+		{
+			ticker: 'SSEC',
+			url: 'https://c.stockcharts.com/c-sc/sc?s=%24SSEC&p=D&b=5&g=0&i=t2208916711c&h=0.png'
+		},
+		{
+			ticker: 'HSCEI',
+			url: 'https://c.stockcharts.com/c-sc/sc?s=%24HSCEI&p=D&b=5&g=0&i=t2208916711c&h=0.png'
+		},
+		{
+			ticker: 'NIKK',
+			url: 'https://c.stockcharts.com/c-sc/sc?s=%24NIKK&p=D&b=5&g=0&i=t2208916711c&h=0.png'
+		},
+		{
+			ticker: 'DAX',
+			url: 'https://c.stockcharts.com/c-sc/sc?s=%24DAX&p=D&b=5&g=0&i=t2208916711c&h=0.png'
+		},
+		{
+			ticker: 'USB_T',
+			url: 'https://c.stockcharts.com/c-sc/sc?s=%24USB&p=D&b=5&g=0&i=t2208916711c&h=0.png'
+		}
+	];
+
+	if (!content.includes('$')) return false;
+
+	//$ssec 15 rsi
+	//$ups
+	let tickerName = content.split('$')[1].split(' ')[0].toUpperCase();
+	console.log('163:' + tickerName);
+	for (let i = 0; i < VALID_INTERCEPTORS.length; i++) {
+		let intec = VALID_INTERCEPTORS[i];
+		if (intec.ticker === tickerName) {
+			return { valid: true, ticker: intec };
+		}
+	}
+
+	return false;
 }
 
 const urlExists = (url) =>
