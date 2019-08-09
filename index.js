@@ -257,14 +257,15 @@ function extractFromOptions(key, options) {
 					break;
 			}
 		}
-
-		if (
-			!options.includes('bb20') &&
-			!options.includes('bb50') &&
-			!options.includes('borc') &&
-			!options.includes('ema')
-		) {
-			tempIndicator += ',sma_50,sma_200,sma_20';
+		if (options.includes('d') || tempIndicator != '') {
+			if (
+				!options.includes('bb20') &&
+				!options.includes('bb50') &&
+				!options.includes('borc') &&
+				!options.includes('ema')
+			) {
+				tempIndicator += ',sma_50,sma_200,sma_20';
+			}
 		}
 
 		return tempIndicator;
