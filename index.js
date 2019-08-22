@@ -29,9 +29,9 @@ client.on('message', (message) => {
 		let m =
 			'fsb-ticker. Developed by BuffMan \n\n Example commands: \n `$avgo`\n `$aapl w`\n `$tsla d rsi macd`\n `$spy line`\n `$/es`\n `$.btc`\n `$usd/jpy w`\n `$sectors ytd`\n\n' +
 			'**Currently Scheduled Features**\n' +
-			'- Add support for BollingerBands and other Overlays\n\n' +
+			'- RTF Description be more detailed\n\n' +
 			'_Contact BuffMan for more info and any feature requests_\n';
-		message.channel.send(m);
+		message.channel.send(formatFancyMessage(m));
 	} else if (message.content.startsWith('$.')) {
 		console.log('CRYPTO');
 		let ticker = message.content.toLowerCase().split(' ')[0].substring(2);
@@ -41,9 +41,12 @@ client.on('message', (message) => {
 		let timePeriod = extractFromOptions('time_period_forex', options);
 		console.log('https://elite.finviz.com/fx_image.ashx?' + ticker + 'usd_' + timePeriod + '_l.png');
 		if (checkTicker(ticker, 'crypto')) {
-			message.channel.send('', {
-				files: [ 'https://elite.finviz.com/fx_image.ashx?' + ticker + 'usd_' + timePeriod + '_l.png' ]
-			});
+			message.channel.send(
+				formatFancyMessage(
+					`Crypto ${ticker.toUpperCase()} ${rawOptions}`,
+					'https://elite.finviz.com/fx_image.ashx?' + ticker + 'usd_' + timePeriod + '_l.png'
+				)
+			);
 		}
 	} else if (message.content.includes('/') && message.content.indexOf('/') != 1) {
 		console.log('FOREX');
@@ -53,11 +56,12 @@ client.on('message', (message) => {
 		for (var i = 0; i < rawOptions.length; i++) options.push(rawOptions[i]);
 		let timePeriod = extractFromOptions('time_period_forex', options);
 		if (checkTicker(ticker, 'forex')) {
-			message.channel.send('', {
-				files: [
+			message.channel.send(
+				formatFancyMessage(
+					`Forex ${ticker.toUpperCase()} ${rawOptions}`,
 					'https://elite.finviz.com/fx_image.ashx?' + ticker.split('/').join('') + '_' + timePeriod + '_l.png'
-				]
-			});
+				)
+			);
 		}
 	} else if (message.content.startsWith('$sectors')) {
 		console.log('SECTORS');
@@ -68,9 +72,12 @@ client.on('message', (message) => {
 		}
 		let formattedTimePeriod = extractFromOptions('time_period_sector', rawTimePeriod);
 
-		message.channel.send('', {
-			files: [ 'https://elite.finviz.com/grp_image.ashx?bar_sector_' + formattedTimePeriod + '.png' ]
-		});
+		message.channel.send(
+			formatFancyMessage(
+				`Sectors ${rawTimePeriod}`,
+				'https://elite.finviz.com/grp_image.ashx?bar_sector_' + formattedTimePeriod + '.png'
+			)
+		);
 	} else if (message.content.startsWith('$/')) {
 		console.log('FUTURES');
 		let ticker = message.content.toLowerCase().split(' ')[0].substring(1);
@@ -82,9 +89,12 @@ client.on('message', (message) => {
 		let timePeriod = extractFromOptions('time_period_futures', options);
 		console.log(`timePeriod: ${timePeriod}`);
 		if (checkTicker(ticker)) {
-			message.channel.send('', {
-				files: [ 'https://elite.finviz.com/fut_chart.ashx?t=' + ticker + '&p=' + timePeriod + '&f=1.png' ]
-			});
+			message.channel.send(
+				formatFancyMessage(
+					`Futures ${ticker.toUpperCase()} ${rawOptions}`,
+					'https://elite.finviz.com/fut_chart.ashx?t=' + ticker + '&p=' + timePeriod + '&f=1.png'
+				)
+			);
 		}
 	} else if (message.content.startsWith('$')) {
 		let ticker = message.content.toLowerCase().split(' ')[0].substring(1);
@@ -108,8 +118,9 @@ client.on('message', (message) => {
 				'.png'
 		);
 		if (checkTicker(ticker)) {
-			message.channel.send('', {
-				files: [
+			message.channel.send(
+				formatFancyMessage(
+					`${ticker.toUpperCase()} ${rawOptions}`,
 					'https://elite.finviz.com/chart.ashx?t=' +
 						ticker +
 						'&ty=' +
@@ -119,8 +130,8 @@ client.on('message', (message) => {
 						timePeriod +
 						'&s=l' +
 						'.png'
-				]
-			});
+				)
+			);
 		}
 	}
 });
@@ -367,6 +378,22 @@ function extractFromOptions(key, options) {
 		}
 		return tempTimePeriod;
 	}
+}
+
+function formatFancyMessage(message, url) {
+	return {
+		embed: {
+			color: 0x009d14,
+			author: {
+				name: client.user.username,
+				icon_url: client.user.avatarURL
+			},
+			description: message,
+			image: {
+				url
+			}
+		}
+	};
 }
 
 client.login(config.BOT_TOKEN);
