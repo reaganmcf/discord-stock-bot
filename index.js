@@ -43,12 +43,9 @@ client.on('message', (message) => {
 		let timePeriod = extractFromOptions('time_period_forex', options);
 		console.log('https://elite.finviz.com/fx_image.ashx?' + ticker + 'usd_' + timePeriod + '_l.png');
 		if (checkTicker(ticker, 'crypto')) {
-			message.channel.send(
-				formatFancyMessage(
-					`Crypto ${ticker.toUpperCase()} ${rawOptions}`,
-					'https://elite.finviz.com/fx_image.ashx?' + ticker + 'usd_' + timePeriod + '_l.png'
-				)
-			);
+			message.channel.send('', {
+				files: [ 'https://elite.finviz.com/fx_image.ashx?' + ticker + 'usd_' + timePeriod + '_l.png' ]
+			});
 		}
 	} else if (message.content.includes('/') && message.content.indexOf('/') != 1) {
 		console.log('FOREX');
@@ -57,13 +54,15 @@ client.on('message', (message) => {
 		let options = [];
 		for (var i = 0; i < rawOptions.length; i++) options.push(rawOptions[i]);
 		let timePeriod = extractFromOptions('time_period_forex', options);
+		console.log(
+			'https://elite.finviz.com/fx_image.ashx?' + ticker.split('/').join('') + '_' + timePeriod + '_l.png'
+		);
 		if (checkTicker(ticker, 'forex')) {
-			message.channel.send(
-				formatFancyMessage(
-					`Forex ${ticker.toUpperCase()} ${rawOptions}`,
+			message.channel.send('', {
+				files: [
 					'https://elite.finviz.com/fx_image.ashx?' + ticker.split('/').join('') + '_' + timePeriod + '_l.png'
-				)
-			);
+				]
+			});
 		}
 	} else if (message.content.startsWith('$sectors')) {
 		console.log('SECTORS');
@@ -74,12 +73,9 @@ client.on('message', (message) => {
 		}
 		let formattedTimePeriod = extractFromOptions('time_period_sector', rawTimePeriod);
 
-		message.channel.send(
-			formatFancyMessage(
-				`Sectors ${rawTimePeriod}`,
-				'https://elite.finviz.com/grp_image.ashx?bar_sector_' + formattedTimePeriod + '.png'
-			)
-		);
+		message.channel.send('', {
+			files: [ 'https://elite.finviz.com/grp_image.ashx?bar_sector_' + formattedTimePeriod + '.png' ]
+		});
 	} else if (message.content.startsWith('$/')) {
 		console.log('FUTURES');
 		let ticker = message.content.toLowerCase().split(' ')[0].substring(1);
@@ -93,8 +89,13 @@ client.on('message', (message) => {
 		if (checkTicker(ticker)) {
 			message.channel.send(
 				formatFancyMessage(
-					`Futures ${ticker.toUpperCase()} ${rawOptions}`,
-					'https://elite.finviz.com/fut_chart.ashx?t=' + ticker + '&p=' + timePeriod + '&f=1.png'
+					`Futures ${ticker.toUpperCase()}`,
+					'https://elite.finviz.com/fut_chart.ashx?t=' +
+						ticker +
+						'&p=' +
+						timePeriod +
+						'&f=1' +
+						`x=${Math.random()}.png`
 				)
 			);
 		}
@@ -108,6 +109,8 @@ client.on('message', (message) => {
 		let chartType = extractFromOptions('chart_type', options);
 		let additionalIndicators = extractFromOptions('indicators', options);
 		if (additionalIndicators.length != 0) timePeriod = 'd';
+
+		let rand = Math.random();
 		console.log(
 			'https://elite.finviz.com/chart.ashx?t=' +
 				ticker +
@@ -117,12 +120,12 @@ client.on('message', (message) => {
 				'&p=' +
 				timePeriod +
 				'&s=l' +
-				'.png'
+				`x=${Math.random()}.png`
 		);
 		if (checkTicker(ticker)) {
 			message.channel.send(
 				formatFancyMessage(
-					`${ticker.toUpperCase()} ${rawOptions}`,
+					`${ticker.toUpperCase()}`,
 					'https://elite.finviz.com/chart.ashx?t=' +
 						ticker +
 						'&ty=' +
@@ -131,7 +134,7 @@ client.on('message', (message) => {
 						'&p=' +
 						timePeriod +
 						'&s=l' +
-						'.png'
+						`x=${Math.random()}.png`
 				)
 			);
 		}
