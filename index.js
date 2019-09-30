@@ -6,17 +6,17 @@ client.on('ready', () => {
 	console.log('I am ready! Current time is ' + moment().format('LT'));
 	let weekday = moment().isoWeekday();
 	let sentMessage = false;
-	setInterval(() => {
-		if (moment().format('LT') == '1:30 PM' && !sentMessage && weekday < 6) {
-			console.log('MARKET HAS OPENED');
-			sentMessage = true;
-			client.channels
-				.get(config.MORNING_BELL_CHANNEL_ID)
-				.send(formatFancyMessage('**MARKET IS OPEN**\n\t:bell::bell::bell:\t'));
-		} else if (moment().format('LT') == '1:31 AM') {
-			sentMessage = false;
-		}
-	}, 1000);
+	// setInterval(() => {
+	// 	if (moment().format('LT') == '1:30 PM' && !sentMessage && weekday < 6) {
+	// 		console.log('MARKET HAS OPENED');
+	// 		sentMessage = true;
+	// 		client.channels
+	// 			.get(config.MORNING_BELL_CHANNEL_ID)
+	// 			.send(formatFancyMessage('**MARKET IS OPEN**\n\t:bell::bell::bell:\t'));
+	// 	} else if (moment().format('LT') == '1:31 AM') {
+	// 		sentMessage = false;
+	// 	}
+	// }, 1000);
 });
 
 client.on('message', (message) => {
