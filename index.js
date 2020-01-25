@@ -4,19 +4,15 @@ const config = require('./config');
 const client = new Discord.Client();
 client.on('ready', () => {
 	console.log('I am ready! Current time is ' + moment().format('LT'));
-	let weekday = moment().isoWeekday();
-	let sentMessage = false;
-	// setInterval(() => {
-	// 	if (moment().format('LT') == '1:30 PM' && !sentMessage && weekday < 6) {
-	// 		console.log('MARKET HAS OPENED');
-	// 		sentMessage = true;
-	// 		client.channels
-	// 			.get(config.MORNING_BELL_CHANNEL_ID)
-	// 			.send(formatFancyMessage('**MARKET IS OPEN**\n\t:bell::bell::bell:\t'));
-	// 	} else if (moment().format('LT') == '1:31 AM') {
-	// 		sentMessage = false;
-	// 	}
-	// }, 1000);
+});
+
+/**
+ * Handler for garbage collecting old messages
+ */
+client.on('messageReactionAdd', (reaction, user) => {
+	if (user.bot) return;
+	if (reaction.emoji.name !== '❌') return;
+	if (reaction.message.author.id == config.BOT_ID) reaction.message.delete();
 });
 
 client.on('message', (message) => {
@@ -24,9 +20,13 @@ client.on('message', (message) => {
 	if (catcher) {
 		console.log('caught intercept');
 		console.log(catcher);
-		message.channel.send('', {
-			files: [ catcher.ticker.url ]
-		});
+		message.channel
+			.send('', {
+				files: [ catcher.ticker.url ]
+			})
+			.then((msg) => {
+				msg.react('❌');
+			});
 	} else if (message.content == '$help') {
 		let m =
 			'fsb-ticker. Developed by BuffMan \n\n Example commands: \n `$avgo`\n `$aapl w`\n `$tsla d rsi macd`\n `$spy line`\n `$/es`\n `$.btc`\n `$usd/jpy w`\n `$sectors ytd`\n\n' +
@@ -43,9 +43,13 @@ client.on('message', (message) => {
 		let timePeriod = extractFromOptions('time_period_forex', options);
 		console.log('https://elite.finviz.com/fx_image.ashx?' + ticker + 'usd_' + timePeriod + '_l.png');
 		if (checkTicker(ticker, 'crypto')) {
-			message.channel.send('', {
-				files: [ 'https://elite.finviz.com/fx_image.ashx?' + ticker + 'usd_' + timePeriod + '_l.png' ]
-			});
+			message.channel
+				.send('', {
+					files: [ 'https://elite.finviz.com/fx_image.ashx?' + ticker + 'usd_' + timePeriod + '_l.png' ]
+				})
+				.then((msg) => {
+					msg.react('❌');
+				});
 		}
 	} else if (message.content.includes('/') && message.content.indexOf('/') != 1) {
 		console.log('FOREX');
@@ -58,11 +62,19 @@ client.on('message', (message) => {
 			'https://elite.finviz.com/fx_image.ashx?' + ticker.split('/').join('') + '_' + timePeriod + '_l.png'
 		);
 		if (checkTicker(ticker, 'forex')) {
-			message.channel.send('', {
-				files: [
-					'https://elite.finviz.com/fx_image.ashx?' + ticker.split('/').join('') + '_' + timePeriod + '_l.png'
-				]
-			});
+			message.channel
+				.send('', {
+					files: [
+						'https://elite.finviz.com/fx_image.ashx?' +
+							ticker.split('/').join('') +
+							'_' +
+							timePeriod +
+							'_l.png'
+					]
+				})
+				.then((msg) => {
+					msg.react('❌');
+				});
 		}
 	} else if (message.content.startsWith('$sectors')) {
 		console.log('SECTORS');
@@ -73,9 +85,13 @@ client.on('message', (message) => {
 		}
 		let formattedTimePeriod = extractFromOptions('time_period_sector', rawTimePeriod);
 
-		message.channel.send('', {
-			files: [ 'https://elite.finviz.com/grp_image.ashx?bar_sector_' + formattedTimePeriod + '.png' ]
-		});
+		message.channel
+			.send('', {
+				files: [ 'https://elite.finviz.com/grp_image.ashx?bar_sector_' + formattedTimePeriod + '.png' ]
+			})
+			.then((msg) => {
+				msg.react('❌');
+			});
 	} else if (message.content.startsWith('$/')) {
 		console.log('FUTURES');
 		let ticker = message.content.toLowerCase().split(' ')[0].substring(1);
@@ -87,17 +103,21 @@ client.on('message', (message) => {
 		let timePeriod = extractFromOptions('time_period_futures', options);
 		console.log(`timePeriod: ${timePeriod}`);
 		if (checkTicker(ticker)) {
-			message.channel.send(
-				formatFancyMessage(
-					`Futures ${ticker.toUpperCase()}`,
-					'https://elite.finviz.com/fut_chart.ashx?t=' +
-						ticker +
-						'&p=' +
-						timePeriod +
-						'&f=1' +
-						`x=${Math.random()}.png`
+			message.channel
+				.send(
+					formatFancyMessage(
+						`Futures ${ticker.toUpperCase()}`,
+						'https://elite.finviz.com/fut_chart.ashx?t=' +
+							ticker +
+							'&p=' +
+							timePeriod +
+							'&f=1' +
+							`x=${Math.random()}.png`
+					)
 				)
-			);
+				.then((msg) => {
+					msg.react('❌');
+				});
 		}
 	} else if (message.content.startsWith('$')) {
 		let ticker = message.content.toLowerCase().split(' ')[0].substring(1);
@@ -123,20 +143,24 @@ client.on('message', (message) => {
 				`x=${Math.random()}.png`
 		);
 		if (checkTicker(ticker)) {
-			message.channel.send(
-				formatFancyMessage(
-					`${ticker.toUpperCase()}`,
-					'https://elite.finviz.com/chart.ashx?t=' +
-						ticker +
-						'&ty=' +
-						chartType +
-						(timePeriod == 'd' ? '&ta=st_c,sch_200p' + additionalIndicators : '') +
-						'&p=' +
-						timePeriod +
-						'&s=l' +
-						`x=${Math.random()}.png`
+			message.channel
+				.send(
+					formatFancyMessage(
+						`${ticker.toUpperCase()}`,
+						'https://elite.finviz.com/chart.ashx?t=' +
+							ticker +
+							'&ty=' +
+							chartType +
+							(timePeriod == 'd' ? '&ta=st_c,sch_200p' + additionalIndicators : '') +
+							'&p=' +
+							timePeriod +
+							'&s=l' +
+							`x=${Math.random()}.png`
+					)
 				)
-			);
+				.then((msg) => {
+					msg.react('❌');
+				});
 		}
 	}
 });
