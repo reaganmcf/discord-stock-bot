@@ -410,6 +410,7 @@ function extractFromOptions(key, options) {
 }
 
 function formatFancyMessage(message, url) {
+	return { files: [ url ] };
 	return {
 		embed: {
 			color: 0x009d14,
