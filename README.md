@@ -118,3 +118,10 @@ I made this for a private stock trading discord group I run. This was initially 
 3. Run `npm install`
 3. Run `node index.js`
 
+
+### Docker
+
+If preferred, you can also build and deploy as a Docker container.
+
+1. `docker build -t stockbot .`
+2. `docker run -e BOT_TOKEN="mybottokenaaaaaaaaaaaaaaa" -e CHANNEL_ID="123412341234" stockbot`
