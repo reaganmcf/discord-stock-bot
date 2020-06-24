@@ -85,13 +85,7 @@ client.on('message', (message) => {
 		}
 		let formattedTimePeriod = extractFromOptions('time_period_sector', rawTimePeriod);
 
-		message.channel
-			.send('', {
-				files: [ 'https://elite.finviz.com/grp_image.ashx?bar_sector_' + formattedTimePeriod + '.png' ]
-			})
-			.then((msg) => {
-				msg.react('❌');
-			});
+		message.channel.send('Finviz has cut support for this feature. RIP $sectors', {});
 	} else if (message.content.startsWith('$/')) {
 		console.log('FUTURES');
 		let ticker = message.content.toLowerCase().split(' ')[0].substring(1);
