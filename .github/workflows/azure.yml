@@ -1,0 +1,28 @@
+on:
+  push:
+    branches:
+    - master
+  pull_request:
+    branches:
+      - master
+
+env:
+  NODE_VERSION: '14.x'
+
+jobs:
+  build-and-deploy:
+    name: Build and Deploy
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Use Node.js ${{ env.NODE_VERSION }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ env.NODE_VERSION }}
+    - name: npm install, build, and test
+      run: |
+        # Build and test the project
+        npm install
+        npm run lint
+        npm run build
+        npm run test:coverage
