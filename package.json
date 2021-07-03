@@ -12,6 +12,7 @@
     "discord.js": "^11.5.1",
     "moment": "^2.24.0",
     "node-fetch": "^2.6.0",
-    "request": "^2.88.0"
+    "request": "^2.88.0",
+    "dotenv": "^8.2.0"
   }
 }

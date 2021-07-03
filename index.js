@@ -1,6 +1,7 @@
 const Discord = require('discord.js');
 const moment = require('moment');
-const config = require('./config');
+require('dotenv').config();
+
 const client = new Discord.Client();
 client.on('ready', () => {
 	console.log('I am ready! Current time is ' + moment().format('LT'));
@@ -12,7 +13,7 @@ client.on('ready', () => {
 client.on('messageReactionAdd', (reaction, user) => {
 	if (user.bot) return;
 	if (reaction.emoji.name !== '❌') return;
-	if (reaction.message.author.id == config.BOT_ID) reaction.message.delete();
+	if (reaction.message.author.id == process.env.TOKEN) reaction.message.delete();
 });
 
 client.on('message', (message) => {
@@ -420,4 +421,4 @@ function formatFancyMessage(message, url) {
 	};
 }
 
-client.login(config.BOT_TOKEN);
+client.login(process.env.TOKEN);
