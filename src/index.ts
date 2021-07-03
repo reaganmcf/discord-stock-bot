@@ -24,7 +24,7 @@ client.on('message', (message) => {
     message.channel
       .send('', {
         files: [catcher.ticker.url],
-      });
+      })
   } else if (message.content == '$help') {
     const m =			'fsb-ticker. Developed by BuffMan \n\n Example commands: \n `$avgo`\n `$aapl w`\n `$tsla d rsi macd`\n `$spy line`\n `$/es`\n `$.btc`\n `$usd/jpy w`\n `$sectors ytd`\n\n'
 			+ '**Currently Scheduled Features**\n'
@@ -43,7 +43,7 @@ client.on('message', (message) => {
       message.channel
         .send('', {
           files: [`https://elite.finviz.com/fx_image.ashx?${ticker}usd_${timePeriod}_l.png`],
-        });
+        })
     }
   } else if (message.content.includes('/') && message.content.indexOf('/') != 1) {
     console.log('FOREX');
@@ -65,17 +65,8 @@ client.on('message', (message) => {
 							 timePeriod
 							 }_l.png`,
           ],
-        });
+        })
     }
-  } else if (message.content.startsWith('$sectors')) {
-    console.log('SECTORS');
-    const rawOptions = message.content.toLowerCase().split(' ');
-    let rawTimePeriod = 'day';
-    if (rawOptions.length > 1) {
-      rawTimePeriod = rawOptions[1];
-    }
-
-    message.channel.send('Finviz has cut support for this feature. RIP $sectors', {});
   } else if (message.content.startsWith('$/')) {
     console.log('FUTURES');
     const ticker = message.content.toLowerCase().split(' ')[0].substring(1);
@@ -89,18 +80,16 @@ client.on('message', (message) => {
     if (checkTicker(ticker)) {
       message.channel
         .send(
-          {
+          { 
 			  files: [
-              `Futures ${ticker.toUpperCase()}`,
-              `https://elite.finviz.com/fut_chart.ashx?t=${
+            `https://elite.finviz.com/fut_chart.ashx?t=${
 							 ticker
 							 }&p=${
 							 timePeriod
 							 }&f=1`
 							+ `x=${Math.random()}.png`,
-			  ],
-          },
-        );
+			  ]},
+        )
     }
   } else if (message.content.startsWith('$')) {
     const ticker = message.content.toLowerCase().split(' ')[0].substring(1);
@@ -113,7 +102,6 @@ client.on('message', (message) => {
     const additionalIndicators = extractFromOptions('indicators', options);
     if (additionalIndicators.length != 0) timePeriod = 'd';
 
-    const rand = Math.random();
     console.log(
       `https://elite.finviz.com/chart.ashx?t=${
 				 ticker
@@ -129,9 +117,8 @@ client.on('message', (message) => {
       message.channel
         .send(
           {
-			  files: [
-              `${ticker.toUpperCase()}`,
-              `https://elite.finviz.com/chart.ashx?t=${
+			  files:[
+            `https://elite.finviz.com/chart.ashx?t=${
 							 ticker
 							 }&ty=${
 							 chartType
@@ -140,9 +127,9 @@ client.on('message', (message) => {
 							 timePeriod
 							 }&s=l`
 							+ `x=${Math.random()}.png`,
-            ],
-          },
-        );
+							]
+						},
+        )
     }
   }
 });
@@ -156,7 +143,7 @@ const checkTicker = (ticker: string, type_check?: 'crypto' | 'forex') => {
     }
   }
   return !/.*\d+.*/g.test(ticker);
-};
+}
 
 const isStockChartsInterceptor = (content: any): any => {
   // $SSEC, $HSCEI, $NIKK, $DAX, $USB_T
@@ -197,7 +184,8 @@ const isStockChartsInterceptor = (content: any): any => {
   }
 
   return false;
-};
+}
+
 
 const extractFromOptions = (key: any, options: any): String => {
   if (key == 'indicators') {
@@ -384,6 +372,6 @@ const extractFromOptions = (key: any, options: any): String => {
     }
     return tempTimePeriod;
   }
-};
+}
 
 client.login(process.env.TOKEN);
