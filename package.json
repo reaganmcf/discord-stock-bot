@@ -9,7 +9,8 @@
     "lint:fix": "eslint --fix src/**/*.ts",
     "test": "jasmine-ts --config=jasmine-ts.json",
     "test:coverage": "ts-node node_modules/nyc/bin/nyc.js npm test",
-    "start": "node ./dist/index.js"
+    "start": "node ./dist/index.js",
+    "postinstall": "tsc"
   },
   "author": "reagan mcfarland",
   "license": "ISC",
