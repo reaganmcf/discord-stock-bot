@@ -1,7 +1,4 @@
 # Discord Stock Bot
-I made this for a private stock trading discord group I run. This was initially just thrown together and I have plenty of enhancements and features planned.
-
-**If you have any features you would like implemented, please submit a new issue with the _Feature Request_ label and I will respond :\)**
 
 ## Example Chart
 ![](https://cdn.discordapp.com/attachments/563555590086066188/587663025054547971/chart.ashxttmotyctast_csch_200psma_50sma_200sma_20rsi_b_14macd_b_12_26_9pdslrev1560172643487.png)
@@ -82,17 +79,11 @@ I made this for a private stock trading discord group I run. This was initially 
         - `d` -> Daily
         - `w` -> Weekly 
 
-## Forex
-- Currently supports [10 Currency Pairs](https://elite.finviz.com/forex_charts.ashx)
-- Example:
-`$usd/jpy w`
-![Weekly USD/JPY Chart](https://cdn.discordapp.com/attachments/563558685608116254/589574723760029707/fx_image.ashxusdjpy_w1_l.png)
-- Available Parameters
-    - Time Intervals
-        - `5` -> 5 minute (Default)
-        - `h` -> Hourly
-        - `d` -> Daily
-        - `m` -> Monthly
+## Screener
+Gets a top listing on any finviz screener. Gets sorted ticker listing with price and volume.
+
+Example: `!screener https://finviz.com/screener.ashx?v=141&f=cap_smallover,earningsdate_thismonth,fa_epsqoq_o15,fa_grossmargin_o20,sh_avgvol_o750,sh_curvol_o1000,ta_perf_52w10o,ta_rsi_nob50&ft=4&o=perfytd`
+
 
 
 ## Setup

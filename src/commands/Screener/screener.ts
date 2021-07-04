@@ -1,6 +1,6 @@
 import { Message } from 'discord.js';
 import { ICommand } from '../../icommand';
-import { getFinvizScreen } from './finviz-screener';
+import { getFinvizScreenWholeTable } from './finviz-screener';
 
 const breakingOut = 'https://finviz.com/screener.ashx?v=141&f=fa_debteq_u1,fa_roe_o20,sh_avgvol_o100,ta_highlow50d_nh,ta_sma20_pa,ta_sma200_pa,ta_sma50_pa&ft=4&o=-perf1w';
 
@@ -11,10 +11,25 @@ export const ScreenerCommand: ICommand = {
   trigger: (msg: Message) => msg.content.startsWith('!screener'),
   command: async (message: Message) => {
     const url = message.content.replace('!screener', '').trim();
-    getFinvizScreen(url).then((result) => {
-      message.channel.send(` \`\`\` ${result} \`\`\` `);
+    const table = await getFinvizScreenWholeTable(url);
+    const arrayLength = Math.min(table.length, 5);
+    const fields = table.slice(0, arrayLength).map((value) => ({
+      name: value.ticker,
+      value: `Price: ${value.price} Avg Volume: ${value.avgvolume}`,
+    }));
+
+    message.channel.send({
+      embed: {
+        author: {
+          name: message.client.user.username,
+          icon_url: message.client.user.displayAvatarURL,
+        },
+        color: 3447003,
+        title: 'Custom Screener',
+        url,
+        fields,
+      },
     });
-    return Promise.resolve();
   },
 };
 
@@ -24,9 +39,27 @@ export const BreakoutCommand: ICommand = {
   showInHelp: true,
   trigger: (msg: Message) => msg.content.startsWith('!breakout'),
   command: async (message: Message) => {
-    getFinvizScreen(breakingOut).then((result) => {
-      message.channel.send(` \`\`\` ${result} \`\`\` `);
+    const table = await getFinvizScreenWholeTable(breakingOut);
+    const arrayLength = Math.min(table.length, 5);
+    const fields = table.slice(0, arrayLength).map((value) => ({
+      name: value.ticker,
+      value: `Price: ${value.price} Avg Volume: ${value.avgvolume} Perf Week: ${value.perfweek}`,
+    }));
+
+    message.channel.send({
+      embed: {
+        author: {
+          name: message.client.user.username,
+          icon_url: message.client.user.displayAvatarURL,
+        },
+        color: 3447003,
+        title: 'Stock Breakout',
+        url: breakingOut,
+        description: 'Stocking breaking out',
+        fields,
+      },
     });
+
     return Promise.resolve();
   },
 };
