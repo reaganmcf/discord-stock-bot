@@ -14,7 +14,6 @@ I made this for a private stock trading discord group I run. This was initially 
 - `$/es` -> Show 5 min S&P 500 Furtures chart
 - `$.btc` -> Show 5 min BTC chart
 - `$usd/jpy w` -> Show USD/JPY Forex weekly chart
-- `$sectors ytd` -> Show sector performance YTD 
 
 ## Stocks, Indices, and Equities
 - Example:
@@ -66,21 +65,6 @@ I made this for a private stock trading discord group I run. This was initially 
         - `d` -> Daily
         - `w` -> Weekly 
 
-## Sector Performance
-- View Sector Performace via Bar Chart
-- Example:
-`$sectors ytd`
-![Sectors YTD Bar Chart](https://cdn.discordapp.com/attachments/563558685608116254/589573029252825108/grp_image.ashxbar_sector_ytd.png)
-- Available Parameters
-    - Time Intervals
-        - `d` -> Intraday (Default)
-        - `w` -> Weekly
-        - `m` -> Monthly
-        - `q` -> Quarterly (3 months)
-        - `h` -> Half a year (6 months)
-        - `y` -> Yearly
-        - `ytd` -> Year to Date
- 
 ## Crypto
 - Currently supports
     - `btc` -> Bitcoin
@@ -114,14 +98,7 @@ I made this for a private stock trading discord group I run. This was initially 
 ## Setup
 
 1. Clone the repository to whichever hosting service you prefer
-2. Rename `example-config.js` to `config.js`, and replace the fields with your information
-3. Run `npm install`
-3. Run `node index.js`
-
-
-### Docker
-
-If preferred, you can also build and deploy as a Docker container.
-
-1. `docker build -t stockbot .`
-2. `docker run -e BOT_TOKEN="mybottokenaaaaaaaaaaaaaaa" -e CHANNEL_ID="123412341234" stockbot`
+1. Create .env file in the root folder. Add TOKEN= ****  with the discord bot key
+1. Run `npm i`
+1. Run `npm run build` 
+1. Run `npm start`

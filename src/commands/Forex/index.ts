@@ -1,0 +1,1 @@
+export { ForexCommand } from './forex';

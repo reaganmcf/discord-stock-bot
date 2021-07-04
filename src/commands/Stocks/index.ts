@@ -1,0 +1,1 @@
+export { StocksCommand } from './stocks';
