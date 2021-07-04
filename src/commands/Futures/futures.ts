@@ -6,7 +6,7 @@ export const FuturesCommand: ICommand = {
   name: 'Fuctures',
   helpDescription: '$/es will draw es chart',
   showInHelp: true,
-  trigger: (msg: Message) => msg.cleanContent.startsWith('$/'),
+  trigger: (msg: Message) => msg.content.startsWith('$/'),
   command: async (message: Message) => {
     const ticker = message.content.toLowerCase().split(' ')[0].substring(1);
     const rawOptions = message.content.toLowerCase().split(ticker)[1].substring(1).split(' ');

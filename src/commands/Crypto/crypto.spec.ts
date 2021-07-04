@@ -1,35 +1,35 @@
 import 'jasmine';
 
 import { Message } from 'discord.js';
-import { StocksCommand } from './stocks';
+import { CryptoCommand } from './crypto';
 
-describe('stocks', () => {
+describe('crypto', () => {
   interface TestData {
     msg: string;
     result: boolean;
   }
   const testData: TestData[] = [
-    { msg: '$tsla', result: true },
-    { msg: '$spy rsi macd 5m', result: true },
-    { msg: '$.dtc', result: false },
+    { msg: '$.btc', result: true },
+    { msg: '$.eth rsi macd 5m', result: true },
+    { msg: '$spy', result: false },
     { msg: '$/es', result: false },
     { msg: '$123', result: false },
-    { msg: 'tim $aapl', result: false },
+    { msg: 'tim $.btc', result: false },
     { msg: 'tim aapl', result: false },
   ];
 
   testData.forEach((i) => it('tigger', () => {
     const spy = jasmine.createSpyObj<Message>('message', ['content']);
     spy.content = i.msg;
-    expect(StocksCommand.trigger(spy)).toBe(i.result);
+    expect(CryptoCommand.trigger(spy)).toBe(i.result);
   }));
 
   it('should send message', async () => {
     const spy = jasmine.createSpyObj<Message>('message', ['content', 'channel']);
-    spy.content = '$aapl';
+    spy.content = '$.btc';
     const msgSpy = jasmine.createSpy();
     spy.channel.send = msgSpy;
-    await StocksCommand.command(spy);
+    await CryptoCommand.command(spy);
     expect(spy.channel.send).toHaveBeenCalled();
   });
 });

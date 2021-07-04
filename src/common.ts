@@ -1,5 +1,9 @@
-export const extractFromOptions = (key: any, options: any): String => {
-  if (key == 'indicators') {
+import { type } from "os";
+
+export type OptionsKey = 'indicators' | 'chart_type' | 'time_period' | 'time_period_futures' | 'time_period_forex';
+
+export const extractFromOptions = (key: OptionsKey, options: string[]): string => {
+  if (key === 'indicators') {
     let tempIndicator = '';
 
     for (let i = 0; i < options.length; i++) {
@@ -85,7 +89,7 @@ export const extractFromOptions = (key: any, options: any): String => {
     }
 
     return tempIndicator;
-  } if (key == 'chart_type') {
+  } if (key === 'chart_type') {
     let tempChartType = 'c';
     for (let i = 0; i < options.length; i++) {
       const item = options[i];
@@ -96,8 +100,8 @@ export const extractFromOptions = (key: any, options: any): String => {
       }
     }
     return tempChartType;
-  } if (key == 'time_period') {
-    var tempTimePeriod = 'i5';
+  } if (key === 'time_period') {
+    let tempTimePeriod = 'i5';
     for (let i = 0; i < options.length; i++) {
       const item = options[i];
       switch (item) {
@@ -119,8 +123,8 @@ export const extractFromOptions = (key: any, options: any): String => {
       }
     }
     return tempTimePeriod;
-  } if (key == 'time_period_futures') {
-    var tempTimePeriod = 'm5';
+  } if (key === 'time_period_futures') {
+    let tempTimePeriod = 'm5';
     for (let i = 0; i < options.length; i++) {
       const item = options[i];
       switch (item) {
@@ -139,8 +143,8 @@ export const extractFromOptions = (key: any, options: any): String => {
       }
     }
     return tempTimePeriod;
-  } if (key == 'time_period_forex') {
-    var tempTimePeriod = 'm5';
+  } if (key === 'time_period_forex') {
+    let tempTimePeriod = 'm5';
     for (let i = 0; i < options.length; i++) {
       const item = options[i];
       switch (item) {
@@ -159,37 +163,16 @@ export const extractFromOptions = (key: any, options: any): String => {
       }
     }
     return tempTimePeriod;
-  } if (key == 'time_period_sector') {
-    tempTimePeriod = 't';
-    switch (options) {
-      case 'w':
-        tempTimePeriod = 'w';
-        break;
-      case 'm':
-        tempTimePeriod = 'm';
-        break;
-      case 'q':
-        tempTimePeriod = 'q';
-        break;
-      case 'h':
-        tempTimePeriod = 'h';
-        break;
-      case 'y':
-        tempTimePeriod = 'y';
-        break;
-      case 'ytd':
-        tempTimePeriod = 'ytd';
-        break;
-    }
-    return tempTimePeriod;
   }
 };
 
-export const checkTicker = (ticker: string, type_check?: 'crypto' | 'forex') => {
-  if (type_check != null) {
-    if (type_check == 'forex') {
+export type TickerType = 'crypto' | 'forex' | undefined;
+
+export const checkTicker = (ticker: string, type?: TickerType): boolean => {
+  if (type != undefined) {
+    if (type === 'forex') {
       return /^(eur\/usd|gbp\/usd|usd\/jpy|usd\/cad|usd\/chf|aud\/usd|nzd\/usd|eur\/gbp|gbp\/jpy)/g.test(ticker);
-    } if (type_check == 'crypto') {
+    } if (type === 'crypto') {
       return /^(btc|ltc|eth|xrp|bch)/g.test(ticker);
     }
   }
