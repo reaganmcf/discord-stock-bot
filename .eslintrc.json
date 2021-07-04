@@ -29,6 +29,7 @@
         "no-empty-function": "off",
         "import/extensions": ["error", "ignorePackages", { "ts": "never" }],
         "import/no-extraneous-dependencies": ["error", { "devDependencies": true }],
-        "import/prefer-default-export": "off"
+        "import/prefer-default-export": "off",
+        "no-plusplus": "off"
     }
 }
