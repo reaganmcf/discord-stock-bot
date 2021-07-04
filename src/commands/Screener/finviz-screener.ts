@@ -22,6 +22,9 @@ interface FinVizTable {
 export const getFinvizScreenWholeTable = async (
   finvizScreenerUrl: string,
 ): Promise<FinVizTable[]> => {
+  if (!finvizScreenerUrl.startsWith('https://finviz.com/screener.ashx?v=')) {
+    throw Error('Screener must be a finviz screener. https://finviz.com/screener.ashx?v=');
+  }
   const result = await got(finvizScreenerUrl);
   const $ = cheerio.load(result.body);
   const scrapedData: FinVizTable[] = [];

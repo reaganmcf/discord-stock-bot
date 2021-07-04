@@ -55,7 +55,6 @@ export const BreakoutCommand: ICommand = {
         color: 3447003,
         title: 'Stock Breakout',
         url: breakingOut,
-        description: 'Stocking breaking out',
         fields,
       },
     });
