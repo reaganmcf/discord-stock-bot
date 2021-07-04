@@ -23,5 +23,6 @@ jobs:
       run: |
         # Build and test the project
         npm install
+        rnpm run lint
         npm run build
         npm run test:coverage
