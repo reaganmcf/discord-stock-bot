@@ -3,7 +3,7 @@ import { ICommand } from '../../icommand';
 import { extractFromOptions, checkTicker } from '../../common';
 
 export const FuturesCommand: ICommand = {
-  name: 'Fuctures',
+  name: 'Futures',
   helpDescription: '$/es will draw es chart',
   showInHelp: true,
   trigger: (msg: Message) => msg.content.startsWith('$/'),
