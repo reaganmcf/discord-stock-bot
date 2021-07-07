@@ -2,7 +2,7 @@ import { ICommand } from './icommand';
 import { FuturesCommand } from './commands/Futures';
 import { CryptoCommand } from './commands/Crypto';
 // import { ForexCommand } from './commands/Forex';
-import { StocksCommand } from './commands/Stocks';
+import { StocksCommand, StocksC4, StocksC2 } from './commands/Stocks';
 import { ScreenerCommand, BreakoutCommand } from './commands/Screener';
 import { HelpCommand } from './commands/Help';
 
@@ -14,4 +14,6 @@ export const commandList: ICommand[] = [
   ScreenerCommand,
   BreakoutCommand,
   HelpCommand,
+  StocksC4,
+  StocksC2,
 ];

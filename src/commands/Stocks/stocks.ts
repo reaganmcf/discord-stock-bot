@@ -24,6 +24,16 @@ export const StocksCommand: ICommand = {
       ticker = 'aapl';
     }
 
+    console.log(`https://elite.finviz.com/chart.ashx?t=${
+      ticker
+    }&ty=${
+      chartType
+    }${timePeriod === 'd' ? `&ta=st_c,sch_200p${additionalIndicators}` : ''
+    }&p=${
+      timePeriod
+    }&s=l`
+    + `x=${Math.random()}.png`);
+
     if (checkTicker(ticker)) {
       message.channel
         .send(
@@ -37,6 +47,61 @@ export const StocksCommand: ICommand = {
               }&p=${
                 timePeriod
               }&s=l`
+              + `x=${Math.random()}.png`,
+            ],
+          },
+        );
+    }
+  },
+};
+
+export const StocksC2: ICommand = {
+  name: 'Stock day chart',
+  helpDescription: '!c2',
+  showInHelp: true,
+  trigger: (msg: Message) => msg.content.startsWith('!c2'),
+  command: async (message: Message) => {
+    let ticker = message.content.toLowerCase().split(' ')[1];
+    if (checkTicker(ticker)) {
+      if (ticker.toLowerCase() === 'tim') {
+        ticker = 'aapl';
+      }
+
+      message.channel
+        .send(
+          {
+            files: [
+              `https://elite.finviz.com/chart.ashx?t=${
+                ticker
+              }&ty=c
+              }&p=i5&s=l`
+              + `x=${Math.random()}.png`,
+            ],
+          },
+        );
+    }
+  },
+};
+
+export const StocksC4: ICommand = {
+  name: 'Stock ta chart',
+  helpDescription: '!c4',
+  showInHelp: true,
+  trigger: (msg: Message) => msg.content.startsWith('!c4'),
+  command: async (message: Message) => {
+    let ticker = message.content.toLowerCase().split(' ')[1];
+    if (checkTicker(ticker)) {
+      if (ticker.toLowerCase() === 'tim') {
+        ticker = 'aapl';
+      }
+      message.channel
+        .send(
+          {
+            files: [
+              `https://elite.finviz.com/chart.ashx?t=${
+                ticker
+              }&ty=c
+              &p=d&ta=st_c,sch_200p`
               + `x=${Math.random()}.png`,
             ],
           },
