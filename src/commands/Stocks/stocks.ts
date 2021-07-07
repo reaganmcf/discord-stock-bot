@@ -20,7 +20,7 @@ export const StocksCommand: ICommand = {
     const additionalIndicators = extractFromOptions('indicators', options);
     if (additionalIndicators.length !== 0) timePeriod = 'd';
 
-    if(ticker.toLowerCase() === 'tim') {
+    if (ticker.toLowerCase() === 'tim') {
       ticker = 'aapl';
     }
 
