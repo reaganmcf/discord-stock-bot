@@ -24,16 +24,6 @@ export const StocksCommand: ICommand = {
       ticker = 'aapl';
     }
 
-    console.log(`https://elite.finviz.com/chart.ashx?t=${
-      ticker
-    }&ty=${
-      chartType
-    }${timePeriod === 'd' ? `&ta=st_c,sch_200p${additionalIndicators}` : ''
-    }&p=${
-      timePeriod
-    }&s=l`
-    + `x=${Math.random()}.png`);
-
     if (checkTicker(ticker)) {
       message.channel
         .send(
