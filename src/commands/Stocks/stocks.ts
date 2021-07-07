@@ -91,7 +91,7 @@ export const StocksC4: ICommand = {
               `https://elite.finviz.com/chart.ashx?t=${
                 ticker
               }&ty=c
-              &p=d&ta=st_c,sch_200p`
+              &p=d&ta=st_c,sch_200p,rsi_b_14,sma_50,sma_200,sma_20`
               + `x=${Math.random()}.png`,
             ],
           },
