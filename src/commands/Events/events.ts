@@ -16,7 +16,7 @@ export const EventsCommand: ICommand = {
     table.sort((a, b) => ((a.impact < b.impact) ? 1 : ((b.impact < a.impact) ? -1 : 0)));
     const fields = table.map((value) => ({
       name: value.release,
-      value: `${value.date} ${value.time} Impact: ${impact[value.impact]} Expected: ${value.expected} Prior: ${value.prior}`,
+      value: `${value.date} ${value.time} Impact: ${impact[value.impact]} Expected: ${value.expected} Prior: ${value.prior} Actual: ${value.actual}`,
     }));
 
     message.channel.send({
