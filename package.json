@@ -15,13 +15,15 @@
   "author": "reagan mcfarland",
   "license": "ISC",
   "dependencies": {
+    "@types/sharp": "^0.28.4",
     "cheerio": "^1.0.0-rc.10",
     "discord.js": "^11.5.1",
     "dotenv": "^8.2.0",
     "eslint-import-resolver-typescript": "^2.4.0",
     "got": "^11.8.2",
     "node-fetch": "^2.6.0",
-    "request": "^2.88.0"
+    "request": "^2.88.0",
+    "sharp": "^0.28.3"
   },
   "devDependencies": {
     "@types/jasmine": "^3.5.14",

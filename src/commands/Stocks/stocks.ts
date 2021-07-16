@@ -1,6 +1,8 @@
 import { Message } from 'discord.js';
+
 import { ICommand } from '../../icommand';
 import { extractFromOptions, checkTicker } from '../../common';
+import { drawMoon } from './moon';
 
 export const StocksCommand: ICommand = {
   name: 'Stocks',
@@ -24,23 +26,27 @@ export const StocksCommand: ICommand = {
       ticker = 'aapl';
     }
 
+    const imgFile = `https://elite.finviz.com/chart.ashx?t=${
+      ticker
+    }&ty=${
+      chartType
+    }${timePeriod === 'd' ? `&ta=st_c,sch_200p${additionalIndicators}` : ''
+    }&p=${
+      timePeriod
+    }&s=l`
+        + `x=${Math.random()}.png`;
+
     if (checkTicker(ticker)) {
-      message.channel
-        .send(
-          {
-            files: [
-              `https://elite.finviz.com/chart.ashx?t=${
-                ticker
-              }&ty=${
-                chartType
-              }${timePeriod === 'd' ? `&ta=st_c,sch_200p${additionalIndicators}` : ''
-              }&p=${
-                timePeriod
-              }&s=l`
-              + `x=${Math.random()}.png`,
-            ],
-          },
-        );
+      if (rawOptions.find((v) => v === 'moon')) {
+        await drawMoon(imgFile, message);
+      } else {
+        message.channel
+          .send(
+            {
+              files: [imgFile],
+            },
+          );
+      }
     }
   },
 };
