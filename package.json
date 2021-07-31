@@ -21,13 +21,14 @@
     "dotenv": "^8.2.0",
     "eslint-import-resolver-typescript": "^2.4.0",
     "got": "^11.8.2",
+    "mongoose": "5.13.3",
     "node-fetch": "^2.6.0",
     "request": "^2.88.0",
     "sharp": "^0.28.3"
   },
   "devDependencies": {
     "@types/jasmine": "^3.5.14",
-    "@types/node": "^16.0.0",
+    "@types/node": "15.0.0",
     "@typescript-eslint/eslint-plugin": "^4.28.0",
     "@typescript-eslint/parser": "^4.28.0",
     "eslint": "^7.30.0",

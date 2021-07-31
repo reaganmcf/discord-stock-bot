@@ -1,6 +1,7 @@
 import { Message } from 'discord.js';
 import { ICommand } from '../../icommand';
 import { extractFromOptions, checkTicker } from '../../common';
+import { TickerTracker } from '../../services/tickerTracker';
 
 export const FuturesCommand: ICommand = {
   name: 'Futures',
@@ -13,6 +14,8 @@ export const FuturesCommand: ICommand = {
     const options = [];
     for (let i = 0; i < rawOptions.length; i++) options.push(rawOptions[i]);
     const timePeriod = extractFromOptions('time_period_futures', options);
+    TickerTracker.postTicker(ticker, message.author.id, 'future');
+
     if (checkTicker(ticker)) {
       message.channel
         .send(

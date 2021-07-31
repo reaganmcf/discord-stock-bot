@@ -2,6 +2,7 @@ import 'jasmine';
 
 import { Message } from 'discord.js';
 import { StocksCommand } from './stocks';
+import { TickerTracker } from '../../services/tickerTracker';
 
 describe('stocks', () => {
   interface TestData {
@@ -25,7 +26,8 @@ describe('stocks', () => {
   }));
 
   it('should send message', async () => {
-    const spy = jasmine.createSpyObj<Message>('message', ['content', 'channel']);
+    spyOn(TickerTracker, 'postTicker');
+    const spy = jasmine.createSpyObj<Message>('message', ['content', 'channel', 'author']);
     spy.content = '$aapl';
     const msgSpy = jasmine.createSpy();
     spy.channel.send = msgSpy;

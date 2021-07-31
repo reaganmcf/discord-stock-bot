@@ -6,6 +6,7 @@ import { StocksCommand, StocksC4, StocksC2 } from './commands/Stocks';
 import { ScreenerCommand, BreakoutCommand } from './commands/Screener';
 import { HelpCommand } from './commands/Help';
 import { EventsCommand } from './commands/Events';
+import { TickerTrackerCommand } from './commands/TickerTracker';
 
 export const commandList: ICommand[] = [
   FuturesCommand,
@@ -18,4 +19,5 @@ export const commandList: ICommand[] = [
   StocksC4,
   StocksC2,
   EventsCommand,
+  TickerTrackerCommand,
 ];

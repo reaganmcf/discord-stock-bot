@@ -3,6 +3,7 @@ import { Message } from 'discord.js';
 import { ICommand } from '../../icommand';
 import { extractFromOptions, checkTicker } from '../../common';
 import { drawMoon } from './moon';
+import { TickerTracker } from '../../services/tickerTracker';
 
 export const StocksCommand: ICommand = {
   name: 'Stocks',
@@ -36,6 +37,8 @@ export const StocksCommand: ICommand = {
     }&s=l`
         + `x=${Math.random()}.png`;
 
+    TickerTracker.postTicker(ticker, message.author.id, 'stock');
+
     if (checkTicker(ticker)) {
       if (rawOptions.find((v) => v === 'moon')) {
         await drawMoon(imgFile, message);
@@ -62,6 +65,8 @@ export const StocksC2: ICommand = {
       if (ticker.toLowerCase() === 'tim') {
         ticker = 'aapl';
       }
+
+      TickerTracker.postTicker(ticker, message.author.id, 'stock');
 
       message.channel
         .send(
@@ -90,6 +95,9 @@ export const StocksC4: ICommand = {
       if (ticker.toLowerCase() === 'tim') {
         ticker = 'aapl';
       }
+
+      TickerTracker.postTicker(ticker, message.author.id, 'stock');
+
       message.channel
         .send(
           {
