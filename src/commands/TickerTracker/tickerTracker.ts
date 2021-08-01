@@ -3,17 +3,21 @@ import { ICommand } from '../../icommand';
 import { TickerTracker } from '../../services/tickerTracker';
 
 export const TickerTrackerCommand: ICommand = {
-  name: 'Tickers',
-  helpDescription: '!tickers <n>',
+  name: '!top',
+  helpDescription: 'lists top tickers. optional include user to find top tickers buy user',
   showInHelp: true,
-  trigger: (msg: Message) => msg.content.startsWith('!tickers'),
+  trigger: (msg: Message) => msg.content.startsWith('!top'),
   command: async (message: Message) => {
-    const tickers = await TickerTracker.getTickers(10);
+    const argument = message.content.replace('!top', '').trim();
+    let tickers;
 
-    const fields = tickers.map((ticker) => ({
-      name: ticker._id,
-      value: ticker.count,
-    }));
+    if (argument.startsWith('<@!')) {
+      tickers = await TickerTracker.getTickersByUser(10, argument.slice(3, argument.length - 1));
+    } else {
+      tickers = await TickerTracker.getTickers(10);
+    }
+
+    const fields = tickers.map((ticker) => (`${ticker._id.toUpperCase()}: ${ticker.count}`));
 
     message.channel.send({
       embed: {
@@ -23,7 +27,7 @@ export const TickerTrackerCommand: ICommand = {
         },
         color: 3447003,
         title: 'Top Tickers',
-        fields,
+        description: fields.join('\n'),
       },
     });
     return Promise.resolve();

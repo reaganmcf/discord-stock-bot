@@ -16,10 +16,23 @@ export class TickerTracker {
   static async getTickers(count: number): Promise<TopTickers[]> {
     const tickers = await TickerModel.aggregate([
       {
-        $group: {
-          _id: '$name',
-          count: { $sum: 1 },
-        },
+        $sortByCount: '$name',
+      },
+      {
+        $limit: count,
+      },
+    ]).exec();
+
+    return tickers;
+  }
+
+  static async getTickersByUser(count: number, user: string): Promise<TopTickers[]> {
+    const tickers = await TickerModel.aggregate([
+      {
+        $match: { user },
+      },
+      {
+        $sortByCount: '$name',
       },
       {
         $limit: count,
