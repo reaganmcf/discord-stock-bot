@@ -13,6 +13,8 @@ export const TickerTrackerCommand: ICommand = {
 
     if (argument.startsWith('<@!')) {
       tickers = await TickerTracker.getTickersByUser(10, argument.slice(3, argument.length - 1));
+    } else if (TickerTracker.DateChars.has(argument)) {
+      tickers = await TickerTracker.getTickersByTime(10, argument);
     } else {
       tickers = await TickerTracker.getTickers(10);
     }
