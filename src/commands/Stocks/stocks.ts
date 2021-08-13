@@ -11,11 +11,21 @@ const tickerAlias = new Map([
   ['mouse', 'dis'],
   ['jeff', 'amzn'],
   ['milk', 'rkt'],
-  ['nutella', 'msft']
+  ['nutella', 'msft'],
 ]);
 
+const goonTickers = ['ndra', 'aht', 'mrna'];
+const memeTickers = ['clov', 'sofi', 'pltr', 'gme', 'amc', 'rkt', 'bb', 'bbw', 'wish'];
+
 const getTicker = (name: string): string => {
-  const ticker = tickerAlias.get(name.toLowerCase());
+  const normalizedName = name.toLowerCase();
+  if (normalizedName === 'goon') {
+    return goonTickers[Math.floor(Math.random() * goonTickers.length)];
+  } if (normalizedName === 'meme') {
+    return memeTickers[Math.floor(Math.random() * memeTickers.length)];
+  }
+
+  const ticker = tickerAlias.get(normalizedName);
   if (ticker) {
     return ticker;
   }
