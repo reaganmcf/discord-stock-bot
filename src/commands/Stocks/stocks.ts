@@ -5,6 +5,21 @@ import { extractFromOptions, checkTicker } from '../../common';
 import { drawMoon } from './moon';
 import { TickerTracker } from '../../services/tickerTracker';
 
+const tickerAlias = new Map([
+  ['tim', 'aapl'],
+  ['lisa', 'amd'],
+  ['mouse', 'dis'],
+  ['jeff', 'amzn'],
+]);
+
+const getTicker = (name: string): string => {
+  const ticker = tickerAlias.get(name.toLowerCase());
+  if (ticker) {
+    return ticker;
+  }
+  return name;
+};
+
 export const StocksCommand: ICommand = {
   name: 'Stocks',
   helpDescription: 'example $aapl draw aapl chart',
@@ -23,9 +38,7 @@ export const StocksCommand: ICommand = {
     const additionalIndicators = extractFromOptions('indicators', options);
     if (additionalIndicators.length !== 0) timePeriod = 'd';
 
-    if (ticker.toLowerCase() === 'tim') {
-      ticker = 'aapl';
-    }
+    ticker = getTicker(ticker);
 
     const imgFile = `https://elite.finviz.com/chart.ashx?t=${
       ticker
@@ -62,9 +75,7 @@ export const StocksC2: ICommand = {
   command: async (message: Message) => {
     let ticker = message.content.toLowerCase().split(' ')[1];
     if (checkTicker(ticker)) {
-      if (ticker.toLowerCase() === 'tim') {
-        ticker = 'aapl';
-      }
+      ticker = getTicker(ticker);
 
       TickerTracker.postTicker(ticker, message.author.id, 'stock');
 
@@ -92,9 +103,7 @@ export const StocksC4: ICommand = {
   command: async (message: Message) => {
     let ticker = message.content.toLowerCase().split(' ')[1];
     if (checkTicker(ticker)) {
-      if (ticker.toLowerCase() === 'tim') {
-        ticker = 'aapl';
-      }
+      ticker = getTicker(ticker);
 
       TickerTracker.postTicker(ticker, message.author.id, 'stock');
 
