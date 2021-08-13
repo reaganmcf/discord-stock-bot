@@ -10,6 +10,8 @@ const tickerAlias = new Map([
   ['lisa', 'amd'],
   ['mouse', 'dis'],
   ['jeff', 'amzn'],
+  ['milk', 'rkt'],
+  ['nutella', 'msft']
 ]);
 
 const getTicker = (name: string): string => {
