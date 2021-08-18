@@ -1,1 +1,3 @@
-export { ScreenerCommand, BreakoutCommand } from './screener';
+export {
+  ScreenerCommand, BreakoutCommand, LosersCommand, WinnersCommand,
+} from './screener';
