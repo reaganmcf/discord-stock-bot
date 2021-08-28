@@ -1,0 +1,1 @@
+export { InfoCommand } from './info';
