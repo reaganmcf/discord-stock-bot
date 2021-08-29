@@ -134,3 +134,25 @@ export const StocksC4: ICommand = {
     }
   },
 };
+
+export const StockCharts: ICommand = {
+  name: 'Stock Charts ',
+  helpDescription: '!sc',
+  showInHelp: true,
+  trigger: (msg: Message) => msg.content.startsWith('!sc'),
+  command: async (message: Message) => {
+    let ticker = message.content.toLowerCase().split(' ')[1];
+    ticker = getTicker(ticker);
+
+    TickerTracker.postTicker(ticker, message.author.id, 'stock');
+
+    message.channel
+      .send(
+        {
+          files: [
+            `https://stockcharts.com/c-sc/sc?s=${encodeURI(ticker)}&p=D&b=5&g=0&i=t7180212229c&r=1630253926270.png`
+          ],
+        },
+      );
+  },
+};
