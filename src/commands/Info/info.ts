@@ -1,7 +1,7 @@
 import { Message } from 'discord.js';
 
 import { ICommand } from '../../icommand';
-import { getSymbolInfo } from './stockcharts-info';
+import { getSymbolInfo, getCompanyInfo } from './stockcharts-info';
 
 export const InfoCommand: ICommand = {
   name: 'Info',
@@ -11,6 +11,7 @@ export const InfoCommand: ICommand = {
   command: async (message: Message) => {
     const ticker = message.content.replace('!info', '').trim();
     const info = await getSymbolInfo(ticker);
+    const companyInfo = await getCompanyInfo(ticker);
 
     message.channel.send({
       embed: {
@@ -18,6 +19,7 @@ export const InfoCommand: ICommand = {
         title: ticker.toUpperCase(),
         fields: [
           { name: 'Price', value: info.close },
+          { name: 'Summary', value: companyInfo.slice(0, 1024) },
         ],
       },
     });

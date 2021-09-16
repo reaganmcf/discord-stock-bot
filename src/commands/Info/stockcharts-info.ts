@@ -1,4 +1,5 @@
 import got from 'got';
+import * as cheerio from 'cheerio';
 
 export interface Earnings {
   NextEarningDate: string;
@@ -80,3 +81,9 @@ export interface TickerInfo {
 }
 
 export const getSymbolInfo = async (ticker: string): Promise<TickerInfo> => got(`https://stockcharts.com/j-sum/sum?cmd=symsum&symbol=${encodeURIComponent(ticker)}`).json();
+
+export const getCompanyInfo = async (ticker: string): Promise<string> => {
+  const result = await got(`https://finviz.com/quote.ashx?t=${encodeURIComponent(ticker)}`);
+  const $ = cheerio.load(result.body);
+  return $('body > div:nth-child(8) > div > table:nth-child(3) > tbody > tr.table-light3-row > td').text();
+};
