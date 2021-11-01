@@ -18,7 +18,8 @@ export const getFinvizEventsTable = async (
   const $ = cheerio.load(result.body);
   const scrapedData: FinVizTable[] = [];
   const tableHeaders: string[] = [];
-  $('#homepage > table > tbody > tr:nth-child(6) > td > table > tbody > tr > td:nth-child(1) > table > tbody > tr').each((index, element) => {
+  
+  $('#homepage_bottom > table > tbody > tr:nth-child(4) > td > table > tbody > tr > td:nth-child(1) > table > tbody > tr').each((index, element) => {
     if (index === 0) {
       const ths = $(element).find('td');
       $(ths).each((_i, tdElement) => {
