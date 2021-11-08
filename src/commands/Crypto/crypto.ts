@@ -1,6 +1,6 @@
 import { Message } from 'discord.js';
 import { ICommand } from '../../icommand';
-import { extractFromOptions, checkTicker } from '../../common';
+import { extractFromOptions } from '../../common';
 import { TickerTracker } from '../../services/tickerTracker';
 
 export const CryptoCommand: ICommand = {
@@ -16,11 +16,9 @@ export const CryptoCommand: ICommand = {
     TickerTracker.postTicker(ticker, message.author.id, 'crypto');
     const timePeriod = extractFromOptions('time_period_forex', options);
     console.log(`https://elite.finviz.com/fx_image.ashx?${ticker}usd_${timePeriod}_l.png`);
-    if (checkTicker(ticker, 'crypto')) {
-      message.channel
-        .send('', {
-          files: [`https://elite.finviz.com/fx_image.ashx?${ticker}usd_${timePeriod}_l.png`],
-        });
-    }
+    message.channel
+      .send('', {
+        files: [`https://elite.finviz.com/fx_image.ashx?${ticker}usd_${timePeriod}_l.png`],
+      });
   },
 };

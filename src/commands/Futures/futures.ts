@@ -1,6 +1,6 @@
 import { Message } from 'discord.js';
 import { ICommand } from '../../icommand';
-import { extractFromOptions, checkTicker } from '../../common';
+import { extractFromOptions } from '../../common';
 import { TickerTracker } from '../../services/tickerTracker';
 
 export const FuturesCommand: ICommand = {
@@ -16,20 +16,18 @@ export const FuturesCommand: ICommand = {
     const timePeriod = extractFromOptions('time_period_futures', options);
     TickerTracker.postTicker(ticker, message.author.id, 'future');
 
-    if (checkTicker(ticker)) {
-      message.channel
-        .send(
-          {
-            files: [
-              `https://elite.finviz.com/fut_chart.ashx?t=${
-                ticker
-              }&p=${
-                timePeriod
-              }&f=1`
-              + `x=${Math.random()}.png`,
-            ],
-          },
-        );
-    }
+    message.channel
+      .send(
+        {
+          files: [
+            `https://elite.finviz.com/fut_chart.ashx?t=${
+              ticker
+            }&p=${
+              timePeriod
+            }&f=1`
+            + `x=${Math.random()}.png`,
+          ],
+        },
+      );
   },
 };
