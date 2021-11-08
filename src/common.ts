@@ -169,16 +169,3 @@ export const extractFromOptions = (key: OptionsKey, options: string[]): string =
   }
   return '';
 };
-
-export type TickerType = 'crypto' | 'forex' | undefined;
-
-export const checkTicker = (ticker: string, type?: TickerType): boolean => {
-  if (type !== undefined) {
-    if (type === 'forex') {
-      return /^(eur\/usd|gbp\/usd|usd\/jpy|usd\/cad|usd\/chf|aud\/usd|nzd\/usd|eur\/gbp|gbp\/jpy)/g.test(ticker);
-    } if (type === 'crypto') {
-      return /^(btc|ltc|eth|xrp|bch)/g.test(ticker);
-    }
-  }
-  return !/.*\d+.*/g.test(ticker);
-};

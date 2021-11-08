@@ -1,7 +1,7 @@
 import { Message } from 'discord.js';
 
 import { ICommand } from '../../icommand';
-import { extractFromOptions, checkTicker } from '../../common';
+import { extractFromOptions } from '../../common';
 import { drawMoon } from './moon';
 import { TickerTracker } from '../../services/tickerTracker';
 
@@ -64,17 +64,15 @@ export const StocksCommand: ICommand = {
 
     TickerTracker.postTicker(ticker, message.author.id, 'stock');
 
-    if (checkTicker(ticker)) {
-      if (rawOptions.find((v) => v === 'moon')) {
-        await drawMoon(imgFile, message);
-      } else {
-        message.channel
-          .send(
-            {
-              files: [imgFile],
-            },
-          );
-      }
+    if (rawOptions.find((v) => v === 'moon')) {
+      await drawMoon(imgFile, message);
+    } else {
+      message.channel
+        .send(
+          {
+            files: [imgFile],
+          },
+        );
     }
   },
 };
@@ -86,24 +84,22 @@ export const StocksC2: ICommand = {
   trigger: (msg: Message) => msg.content.startsWith('!c2'),
   command: async (message: Message) => {
     let ticker = message.content.toLowerCase().split(' ')[1];
-    if (checkTicker(ticker)) {
-      ticker = getTicker(ticker);
+    ticker = getTicker(ticker);
 
-      TickerTracker.postTicker(ticker, message.author.id, 'stock');
+    TickerTracker.postTicker(ticker, message.author.id, 'stock');
 
-      message.channel
-        .send(
-          {
-            files: [
-              `https://elite.finviz.com/chart.ashx?t=${
-                ticker
-              }&ty=c
-              }&p=i5&s=l`
-              + `x=${Math.random()}.png`,
-            ],
-          },
-        );
-    }
+    message.channel
+      .send(
+        {
+          files: [
+            `https://elite.finviz.com/chart.ashx?t=${
+              ticker
+            }&ty=c
+            }&p=i5&s=l`
+            + `x=${Math.random()}.png`,
+          ],
+        },
+      );
   },
 };
 
@@ -114,24 +110,22 @@ export const StocksC4: ICommand = {
   trigger: (msg: Message) => msg.content.startsWith('!c4'),
   command: async (message: Message) => {
     let ticker = message.content.toLowerCase().split(' ')[1];
-    if (checkTicker(ticker)) {
-      ticker = getTicker(ticker);
+    ticker = getTicker(ticker);
 
-      TickerTracker.postTicker(ticker, message.author.id, 'stock');
+    TickerTracker.postTicker(ticker, message.author.id, 'stock');
 
-      message.channel
-        .send(
-          {
-            files: [
-              `https://elite.finviz.com/chart.ashx?t=${
-                ticker
-              }&ty=c
-              &p=d&ta=st_c,sch_200p,rsi_b_14,sma_50,sma_200,sma_20`
-              + `x=${Math.random()}.png`,
-            ],
-          },
-        );
-    }
+    message.channel
+      .send(
+        {
+          files: [
+            `https://elite.finviz.com/chart.ashx?t=${
+              ticker
+            }&ty=c
+            &p=d&ta=st_c,sch_200p,rsi_b_14,sma_50,sma_200,sma_20`
+            + `x=${Math.random()}.png`,
+          ],
+        },
+      );
   },
 };
 
@@ -150,7 +144,7 @@ export const StockCharts: ICommand = {
       .send(
         {
           files: [
-            `https://stockcharts.com/c-sc/sc?s=${encodeURI(ticker)}&p=D&b=5&g=0&i=t7180212229c&r=1630253926270.png`
+            `https://stockcharts.com/c-sc/sc?s=${encodeURI(ticker)}&p=D&b=5&g=0&i=t7180212229c&r=1630253926270.png`,
           ],
         },
       );

@@ -1,7 +1,7 @@
 import 'jasmine';
 
 import {
-  extractFromOptions, OptionsKey, checkTicker, TickerType,
+  extractFromOptions, OptionsKey
 } from './common';
 
 describe('Common', () => {
@@ -24,21 +24,4 @@ describe('Common', () => {
   testData.forEach((i) => it(`extractFromOptions ${i.key} ${i.options}`, () => {
     expect(extractFromOptions(i.key, i.options)).toBe(i.result);
   }));
-});
-
-describe('Common', () => {
-    interface TestData {
-      ticker: string;
-      type: TickerType;
-      result: boolean;
-    }
-    const testData: TestData[] = [
-      { ticker: '$aapl', type: undefined, result: true },
-      { ticker: 'eth', type: 'crypto', result: true },
-      { ticker: 'eur/usd', type: 'forex', result: true },
-    ];
-
-    testData.forEach((i) => it(`checkTicker ${i.ticker} ${i.type}`, () => {
-      expect(checkTicker(i.ticker, i.type)).toBe(i.result);
-    }));
 });

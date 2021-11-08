@@ -1,6 +1,6 @@
 import { Message } from 'discord.js';
 import { ICommand } from '../../icommand';
-import { extractFromOptions, checkTicker } from '../../common';
+import { extractFromOptions } from '../../common';
 
 export const ForexCommand: ICommand = {
   name: 'Forex',
@@ -13,17 +13,15 @@ export const ForexCommand: ICommand = {
     const options = [];
     for (let i = 0; i < rawOptions.length; i++) options.push(rawOptions[i]);
     const timePeriod = extractFromOptions('time_period_forex', options);
-    if (checkTicker(ticker, 'forex')) {
-      message.channel
-        .send('', {
-          files: [
-            `https://elite.finviz.com/fx_image.ashx?${
-              ticker.split('/').join('')
-            }_${
-              timePeriod
-            }_l.png`,
-          ],
-        });
-    }
+    message.channel
+      .send('', {
+        files: [
+          `https://elite.finviz.com/fx_image.ashx?${
+            ticker.split('/').join('')
+          }_${
+            timePeriod
+          }_l.png`,
+        ],
+      });
   },
 };
