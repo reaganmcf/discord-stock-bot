@@ -80,7 +80,7 @@ export interface TickerInfo {
   open: string;
 }
 
-export const getSymbolInfo = async (ticker: string): Promise<TickerInfo> => got(`https://stockcharts.com/j-sum/sum?cmd=symsum&symbol=${encodeURIComponent(ticker)}`).json();
+export const getSymbolInfo = async (ticker: string): Promise<TickerInfo> => got(`https://stockcharts.com/j-sum/sum?cmd=symsum&symbol={encodeURIComponent(ticker)}`).json();
 
 export const getCompanyInfo = async (ticker: string): Promise<string> => {
   const result = await got(`https://finviz.com/quote.ashx?t=${encodeURIComponent(ticker)}`);
@@ -89,7 +89,7 @@ export const getCompanyInfo = async (ticker: string): Promise<string> => {
 };
 
 export const getCompanyNews = async (ticker: string): Promise<string[]> => {
-  const result = await got(`https://finviz.com/quote.ashx?t=${encodeURIComponent(ticker)}`);
+  const result = await got(`https://finviz.com/quote.ashx?t={encodeURIComponent(ticker)}`);
   const $ = cheerio.load(result.body);
 
   const news: string[] = [];
