@@ -47,11 +47,11 @@ export const updateText = (imgUrl: string, msg: Message): void => {
           {
             files: ['temp.png'],
           },
-        ).then(() => fs.unlinkSync('temp.jpg'));
+        ).then(() => fs.unlinkSync('temp.png'));
     })
     .catch((err) => {
       console.error("Error processing files, let's clean it up", err);
-      fs.unlinkSync('temp.jpg');
+      fs.unlinkSync('temp.png');
     });
 };
 
