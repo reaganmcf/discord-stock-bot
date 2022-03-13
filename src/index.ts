@@ -1,5 +1,6 @@
 import Discord from 'discord.js';
 import { connect } from 'mongoose';
+import NodeCache from 'node-cache';
 
 import { commandList } from './commandlist';
 
@@ -10,10 +11,12 @@ client.on('ready', () => {
   console.log('I am ready!');
 });
 
+const cache = new NodeCache();
+
 client.on('message', (msg) => {
   const commands = commandList.filter((command) => command.trigger(msg));
   Promise.all(commands.map(async (command) => {
-    command.command(msg);
+    command.command(msg, { cache });
   })).then();
 });
 

@@ -9,9 +9,8 @@ import { TickerTracker } from '../../services/tickerTracker';
 const tickerAlias = new Map([
   ['/rusty', '/er2'],
   ['/rty', '/er2'],
-  ['/cum', '/cl']
+  ['/cum', '/cl'],
 ]);
-
 
 const getTicker = (name: string): string => {
   const normalizedName = name.toLowerCase();
@@ -22,7 +21,6 @@ const getTicker = (name: string): string => {
   }
   return name;
 };
-
 
 export const updateText = (imgUrl: string, msg: Message): void => {
   const sharpStream = sharp({
@@ -55,8 +53,6 @@ export const updateText = (imgUrl: string, msg: Message): void => {
     });
 };
 
-
-
 export const FuturesCommand: ICommand = {
   name: 'Futures',
   helpDescription: '$/es will draw es chart',
@@ -72,15 +68,14 @@ export const FuturesCommand: ICommand = {
     TickerTracker.postTicker(ticker, message.author.id, 'future');
 
     ticker = getTicker(ticker);
-    let file = `https://elite.finviz.com/fut_chart.ashx?t=${
-        ticker
-      }&p=${
-        timePeriod
-      }&f=1`
+    const file = `https://elite.finviz.com/fut_chart.ashx?t=${
+      ticker
+    }&p=${
+      timePeriod
+    }&f=1`
       + `x=${Math.random()}.png`;
 
-
-    if(ogTicker === '/cum') {
+    if (ogTicker === '/cum') {
       return updateText(file, message);
     }
 
@@ -92,5 +87,7 @@ export const FuturesCommand: ICommand = {
           ],
         },
       );
+
+    return Promise.resolve();
   },
 };
