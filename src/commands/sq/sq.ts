@@ -63,7 +63,7 @@ export const SQTickerCommand: ICommand = {
   name: 'SQ-Ticker',
   helpDescription: '!sq {ticker} for 1 ticker ',
   showInHelp: false,
-  trigger: (msg: Message) => msg.content.startsWith('!sq'),
+  trigger: (msg: Message) => msg.content.startsWith('!sq '),
   command: async (message: Message, services: any) => {
     const ticker = message.content.replace('!sq', '').trim();
     try {
