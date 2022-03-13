@@ -5,5 +5,5 @@ export interface ICommand {
     helpDescription: string;
     showInHelp: boolean;
     trigger: (message: Message) => boolean;
-    command: (...args: any[]) => Promise<void>;
+    command: (message: Message, services?: any) => Promise<void>;
 }

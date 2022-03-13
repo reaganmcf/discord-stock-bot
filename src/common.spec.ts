@@ -1,7 +1,7 @@
 import 'jasmine';
 
 import {
-  extractFromOptions, OptionsKey
+  extractFromOptions, OptionsKey,
 } from './common';
 
 describe('Common', () => {
