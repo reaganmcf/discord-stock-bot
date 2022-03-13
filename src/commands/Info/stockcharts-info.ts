@@ -85,7 +85,7 @@ export const getSymbolInfo = async (ticker: string): Promise<TickerInfo> => got(
 export const getCompanyInfo = async (ticker: string): Promise<string> => {
   const result = await got(`https://finviz.com/quote.ashx?t=${encodeURIComponent(ticker)}`);
   const $ = cheerio.load(result.body);
-  return $('body > div:nth-child(8) > div > table:nth-child(3) > tbody > tr.table-light3-row > td').text();
+  return $('body > div:nth-child(9) > div > table:nth-child(3) > tbody > tr.table-light3-row > td').text();
 };
 
 export const getCompanyNews = async (ticker: string): Promise<string[]> => {
